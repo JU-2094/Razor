@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_curvePavement.obj-e97555c895b1d259e70d6edf81d3d92b.mesh"
+
+[deps]
+
+files=[ "res://.import/road_curvePavement.obj-e97555c895b1d259e70d6edf81d3d92b.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_curvePavement.obj"
+dest_files=[ "res://.import/road_curvePavement.obj-e97555c895b1d259e70d6edf81d3d92b.mesh", "res://.import/road_curvePavement.obj-e97555c895b1d259e70d6edf81d3d92b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

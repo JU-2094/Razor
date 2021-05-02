@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/garbageTruck.obj-d66553b787a01a12e0a1c360178f9d2e.mesh"
+
+[deps]
+
+files=[ "res://.import/garbageTruck.obj-d66553b787a01a12e0a1c360178f9d2e.mesh" ]
+
+source_file="res://objects/carkit_v1.4/Models/OBJ format/garbageTruck.obj"
+dest_files=[ "res://.import/garbageTruck.obj-d66553b787a01a12e0a1c360178f9d2e.mesh", "res://.import/garbageTruck.obj-d66553b787a01a12e0a1c360178f9d2e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

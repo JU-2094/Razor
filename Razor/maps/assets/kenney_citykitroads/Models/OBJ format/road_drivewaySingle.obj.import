@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_drivewaySingle.obj-289004add949abe522a240a14ac0c9c8.mesh"
+
+[deps]
+
+files=[ "res://.import/road_drivewaySingle.obj-289004add949abe522a240a14ac0c9c8.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_drivewaySingle.obj"
+dest_files=[ "res://.import/road_drivewaySingle.obj-289004add949abe522a240a14ac0c9c8.mesh", "res://.import/road_drivewaySingle.obj-289004add949abe522a240a14ac0c9c8.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

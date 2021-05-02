@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_roundabout.obj-96e958a16a48bdafc0d75e87b1faa918.mesh"
+
+[deps]
+
+files=[ "res://.import/road_roundabout.obj-96e958a16a48bdafc0d75e87b1faa918.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_roundabout.obj"
+dest_files=[ "res://.import/road_roundabout.obj-96e958a16a48bdafc0d75e87b1faa918.mesh", "res://.import/road_roundabout.obj-96e958a16a48bdafc0d75e87b1faa918.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

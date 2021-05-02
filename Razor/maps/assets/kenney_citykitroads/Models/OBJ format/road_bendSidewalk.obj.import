@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_bendSidewalk.obj-b7b9ea730dca9b14ebb5d521283bc690.mesh"
+
+[deps]
+
+files=[ "res://.import/road_bendSidewalk.obj-b7b9ea730dca9b14ebb5d521283bc690.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_bendSidewalk.obj"
+dest_files=[ "res://.import/road_bendSidewalk.obj-b7b9ea730dca9b14ebb5d521283bc690.mesh", "res://.import/road_bendSidewalk.obj-b7b9ea730dca9b14ebb5d521283bc690.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
