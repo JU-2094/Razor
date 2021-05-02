@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_bendBarrier.obj-938dd0983fc24eebe41eba4deb4c1bbc.mesh"
+
+[deps]
+
+files=[ "res://.import/road_bendBarrier.obj-938dd0983fc24eebe41eba4deb4c1bbc.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_bendBarrier.obj"
+dest_files=[ "res://.import/road_bendBarrier.obj-938dd0983fc24eebe41eba4deb4c1bbc.mesh", "res://.import/road_bendBarrier.obj-938dd0983fc24eebe41eba4deb4c1bbc.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

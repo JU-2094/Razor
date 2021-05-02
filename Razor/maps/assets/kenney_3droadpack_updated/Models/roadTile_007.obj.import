@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/roadTile_007.obj-45d09bd4568b486882ffd7facf945b40.mesh"
+
+[deps]
+
+files=[ "res://.import/roadTile_007.obj-45d09bd4568b486882ffd7facf945b40.mesh" ]
+
+source_file="res://maps/assets/kenney_3droadpack_updated/Models/roadTile_007.obj"
+dest_files=[ "res://.import/roadTile_007.obj-45d09bd4568b486882ffd7facf945b40.mesh", "res://.import/roadTile_007.obj-45d09bd4568b486882ffd7facf945b40.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

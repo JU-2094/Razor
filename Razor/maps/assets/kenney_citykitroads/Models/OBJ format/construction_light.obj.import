@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/construction_light.obj-ba663a6a35a2e0aad9251614ce50f39f.mesh"
+
+[deps]
+
+files=[ "res://.import/construction_light.obj-ba663a6a35a2e0aad9251614ce50f39f.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/construction_light.obj"
+dest_files=[ "res://.import/construction_light.obj-ba663a6a35a2e0aad9251614ce50f39f.mesh", "res://.import/construction_light.obj-ba663a6a35a2e0aad9251614ce50f39f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

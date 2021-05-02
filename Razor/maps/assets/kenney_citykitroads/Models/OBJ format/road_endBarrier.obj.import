@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/road_endBarrier.obj-12a292e240b05b158f6dc9cd71e29bcb.mesh"
+
+[deps]
+
+files=[ "res://.import/road_endBarrier.obj-12a292e240b05b158f6dc9cd71e29bcb.mesh" ]
+
+source_file="res://maps/assets/kenney_citykitroads/Models/OBJ format/road_endBarrier.obj"
+dest_files=[ "res://.import/road_endBarrier.obj-12a292e240b05b158f6dc9cd71e29bcb.mesh", "res://.import/road_endBarrier.obj-12a292e240b05b158f6dc9cd71e29bcb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
