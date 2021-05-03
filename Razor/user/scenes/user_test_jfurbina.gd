@@ -11,7 +11,6 @@ var mth
 onready var bgproc = preload("res://client/bgproc/bgproc.gd").new()
 onready var network = preload("res://client/network/network.gd").new()
 
-
 func local_test(vars):
 	print("local_test function")
 

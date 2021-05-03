@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/raceFuture.obj-b25ee2e22a723616d04fc57374869dd2.mesh"
+
+[deps]
+
+files=[ "res://.import/raceFuture.obj-b25ee2e22a723616d04fc57374869dd2.mesh" ]
+
+source_file="res://objects/assets/carkit_v1.4/Models/OBJ format/raceFuture.obj"
+dest_files=[ "res://.import/raceFuture.obj-b25ee2e22a723616d04fc57374869dd2.mesh", "res://.import/raceFuture.obj-b25ee2e22a723616d04fc57374869dd2.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
