@@ -6,7 +6,7 @@ signal hit
 export var speed: int = 14
 
 var velocity: Vector3 = Vector3.ZERO
-
+onready var BULLET = preload('res://objects/scenes/little_ball.tscn')
 func _physics_process(delta):
 	var direction: Vector3 = Vector3.ZERO
 	
@@ -32,6 +32,10 @@ func _physics_process(delta):
 	
 	# TODO(jfurbina@): logic for shooting
 	if Input.is_action_pressed("ui_action1"):
+		var b = BULLET.instance()
+		owner.add_child(b)
+		b.transform = $Pivot/Position3D.global_transform
+		b.velocity = -b.transform.basis.z * b.muzzle_velocity
 		pass
 	
 	# Apply movement to player object

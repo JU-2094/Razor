@@ -53,7 +53,11 @@ material/0 = null
 material/1 = null
 material/2 = null
 
+[node name="Position3D" type="Position3D" parent="Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0314647, 0.0448699, 0.196107 )
 shape = SubResource( 1 )
 
 [node name="Area" type="Area" parent="."]
