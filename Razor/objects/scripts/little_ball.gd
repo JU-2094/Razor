@@ -1,7 +1,7 @@
 extends Spatial
 
-var velocity = Vector3.ZERO
-export var muzzle_velocity = 25
+var velocity: Vector3 = Vector3.ZERO
+export var muzzle_velocity: int = 50
 
 func _physics_process(delta):
 	look_at(transform.origin + velocity.normalized(), Vector3.UP)

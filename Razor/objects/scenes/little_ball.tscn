@@ -2,13 +2,16 @@
 
 [ext_resource path="res://objects/scripts/little_ball.gd" type="Script" id=1]
 
-[sub_resource type="SphereMesh" id=1]
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.5
+mid_height = 20.0
 
 [sub_resource type="SpatialMaterial" id=2]
 roughness = 0.19
 
-[sub_resource type="SphereShape" id=3]
-radius = 1.10003
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.5
+height = 20.0
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
@@ -18,8 +21,8 @@ transform = Transform( 0.049808, -0.0867131, 0, 0.0867131, 0.049808, 0, 0, 0, 0.
 mesh = SubResource( 1 )
 material = SubResource( 2 )
 
-[node name="StaticBody" type="StaticBody" parent="CSGMesh"]
-transform = Transform( 0.49808, 0.867131, 0, -0.867131, 0.49808, 0, 0, 0, 1, 0, 0, 0 )
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="CSGMesh/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 3 )

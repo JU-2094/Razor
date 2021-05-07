@@ -8,7 +8,7 @@ radius = 1.06786
 height = 0.002
 
 [sub_resource type="CapsuleShape" id=2]
-radius = 1.02472
+radius = 1.09939
 height = 0.0851614
 
 [sub_resource type="Animation" id=3]
@@ -23,9 +23,9 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0.3, 0.7, 1.2 ),
-"transitions": PoolRealArray( 0.43, 0.466517, 1 ),
+"transitions": PoolRealArray( 0.511359, 1.23115, 1.10957 ),
 "update": 0,
-"values": [ Vector3( 0, 0.4, 0 ), Vector3( 0, 0.7, 0 ), Vector3( 0, 0.2, 0 ) ]
+"values": [ Vector3( 0, 0.4, 0 ), Vector3( 0, 0.5, 0 ), Vector3( 0, 0.3, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Pivot/Character:rotation_degrees")
@@ -35,19 +35,18 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0.1, 0.5, 1.1 ),
-"transitions": PoolRealArray( 0.48, 0.53, 1 ),
+"transitions": PoolRealArray( 0.727544, 0.80333, 1.10957 ),
 "update": 0,
 "values": [ Vector3( -5, 0, 0 ), Vector3( 10, 0, 0 ), Vector3( -10, 0, 0 ) ]
 }
 
 [node name="Player" type="KinematicBody"]
-collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Character" type="MeshInstance" parent="Pivot"]
-transform = Transform( 1, 0, 0, 0, 0.991445, 0.130526, 0, -0.130526, 0.991445, 0, 0.2, 0 )
+transform = Transform( 1, 0, 0, 0, 0.991023, 0.133689, 0, -0.133689, 0.991023, 0, 0.3, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 material/1 = null
@@ -57,15 +56,13 @@ material/2 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0314647, 0.0448699, 0.196107 )
 shape = SubResource( 1 )
 
-[node name="Area" type="Area" parent="."]
+[node name="AreaPlayer" type="Area" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="CollisionShape" type="CollisionShape" parent="AreaPlayer"]
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "float"
 anims/float = SubResource( 3 )
-[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
