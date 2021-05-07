@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://user/scenes/player_basic_01.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demos/basic_01/world_01.gd" type="Script" id=2]
 [ext_resource path="res://demos/basic_01/CameraPivot.gd" type="Script" id=3]
 [ext_resource path="res://demos/hud_demo/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/scenes/spaceship.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/scenes/coinGold.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 10, 20, 1 )
@@ -65,5 +67,12 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0123539, -0.020278, -0.0316539 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
+
+[node name="spaceship" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.44678, 0 )
+
+[node name="coinGold" parent="." instance=ExtResource( 6 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0.0549145, 3.131, 73.0978 )

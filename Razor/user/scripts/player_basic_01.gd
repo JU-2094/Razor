@@ -58,6 +58,17 @@ func add_timer():
 	add_child(timerHandler)
 	timerHandler.start()
 
+
 func die():
 	emit_signal("hit")
 	queue_free()
+
+
+func _on_AreaPlayer_body_entered(body):
+	print(body.get_name())
+	pass # Replace with function body.
+
+
+func _on_AreaPlayer_area_entered(area):
+	print(area.get_name())
+	pass # Replace with function body.

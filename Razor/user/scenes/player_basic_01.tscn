@@ -66,3 +66,5 @@ shape = SubResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "float"
 anims/float = SubResource( 3 )
+[connection signal="area_entered" from="AreaPlayer" to="." method="_on_AreaPlayer_area_entered"]
+[connection signal="body_entered" from="AreaPlayer" to="." method="_on_AreaPlayer_body_entered"]
