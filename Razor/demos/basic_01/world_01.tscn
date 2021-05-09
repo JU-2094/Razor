@@ -72,7 +72,7 @@ mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 
 [node name="spaceship" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.44678, 0 )
+transform = Transform( -9.92027, -0.663679, 1.07133, -0.463826, 9.82703, 1.79284, -1.17178, 1.72885, -9.77947, 26.1233, 8.44678, 74.0546 )
 
 [node name="coinGold" parent="." instance=ExtResource( 6 )]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0.0549145, 3.131, 73.0978 )

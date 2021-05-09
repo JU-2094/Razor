@@ -1,19 +1,37 @@
-extends Spatial
+extends KinematicBody
 
-var velocity: Vector3 = Vector3.ZERO
-export var muzzle_velocity: int = 50
+class_name LittleBall
+
+var position: Position3D
+var timerHandler: Timer
+var direction: Vector3
+var velocity: Vector3
+var init: bool = false
+export var speed: int = 50
+export var lifetime: float = 1
+
+func _ready():
+	timerHandler = Timer.new()
+	timerHandler.connect("timeout", self, "lifetime_out")
+	timerHandler.set_wait_time(lifetime)
+	add_child(timerHandler)
+	timerHandler.start()
+
+func set_dir(dir):
+	direction = dir
+	look_at(translation + direction, Vector3.UP)
 
 func _physics_process(delta):
-	look_at(transform.origin + velocity.normalized(), Vector3.UP)
-	transform.origin += velocity * delta
-	pass
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+	velocity.x = direction.x * speed
+	velocity.z = direction.z * speed
+	velocity = move_and_slide(velocity, Vector3.UP)
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func add_instance( \
+		owner: Node, bulletResource: Resource, pos: Position3D, direction: Vector3):
+	var bullet = bulletResource.instance()
+	bullet.set_dir(direction)
+	owner.add_child(bullet)
+
+func lifetime_out():
+	queue_free()

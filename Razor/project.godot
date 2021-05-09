@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "LittleBall",
+"language": "GDScript",
+"path": "res://objects/scripts/little_ball.gd"
+}, {
+"base": "Timer",
+"class": "TimerHandler",
+"language": "GDScript",
+"path": "res://generic/TimerHandler.gd"
+} ]
 _global_script_class_icons={
-
+"LittleBall": "",
+"TimerHandler": ""
 }
 
 [application]
@@ -22,6 +33,14 @@ config/icon="res://icon.png"
 [autoload]
 
 MusicPlayer="*res://sounds/MusicPlayer.tscn"
+
+[debug]
+
+gdscript/warnings/exclude_addons=false
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/gut/plugin.cfg" )
 
 [input]
 
