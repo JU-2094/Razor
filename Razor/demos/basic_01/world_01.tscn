@@ -22,7 +22,7 @@ size = Vector3( 200, 2, 200 )
 [sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0.152941, 0.164706, 0.27451, 1 )
 
-[node name="Main" type="Spatial"]
+[node name="Main" type="Node"]
 script = ExtResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -72,7 +72,7 @@ mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 
 [node name="spaceship" parent="." instance=ExtResource( 5 )]
-transform = Transform( -9.92027, -0.663679, 1.07133, -0.463826, 9.82703, 1.79284, -1.17178, 1.72885, -9.77947, 26.1233, 8.44678, 74.0546 )
+transform = Transform( 9.0676, 1.16717, -4.05172, -1.51115, 9.87048, -0.538527, 3.93638, 1.10059, 9.12654, 40.6348, 8.44678, 44.7701 )
 
 [node name="coinGold" parent="." instance=ExtResource( 6 )]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0.0549145, 3.131, 73.0978 )

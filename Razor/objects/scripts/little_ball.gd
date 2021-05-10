@@ -2,13 +2,11 @@ extends KinematicBody
 
 class_name LittleBall
 
-var position: Position3D
 var timerHandler: Timer
-var direction: Vector3
-var velocity: Vector3
+var velocity: Vector3 = Vector3.ZERO
 var init: bool = false
 export var speed: int = 50
-export var lifetime: float = 1
+export var lifetime: float = 2
 
 func _ready():
 	timerHandler = Timer.new()
@@ -16,22 +14,15 @@ func _ready():
 	timerHandler.set_wait_time(lifetime)
 	add_child(timerHandler)
 	timerHandler.start()
+	pass
 
-func set_dir(dir):
-	direction = dir
-	look_at(translation + direction, Vector3.UP)
+func set_dir(direction: Vector3):
+	look_at(direction, Vector3.UP)
+	velocity = Vector3.FORWARD * speed
+	velocity = velocity.rotated(Vector3.UP, rotation.y)
 
 func _physics_process(delta):
-	velocity.x = direction.x * speed
-	velocity.z = direction.z * speed
-	velocity = move_and_slide(velocity, Vector3.UP)
-	
-
-func add_instance( \
-		owner: Node, bulletResource: Resource, pos: Position3D, direction: Vector3):
-	var bullet = bulletResource.instance()
-	bullet.set_dir(direction)
-	owner.add_child(bullet)
+	move_and_slide(velocity)
 
 func lifetime_out():
 	queue_free()

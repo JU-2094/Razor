@@ -6,23 +6,22 @@ signal hit
 export var speed: float = 30
 export var fall_acceleration: float = 75
 
-var resourceBullet: Resource = preload("res://objects/scenes/little_ball.tscn")
 var timeHandler: Timer
 var timer_is_running: bool = false
-var bulletNode: LittleBall
 var lastDirection: Vector3 = Vector3.ZERO
-
 var velocity: Vector3 = Vector3.ZERO
+var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
 
 func _ready():
 	set_bullet()
 
-func _physics_process(delta):
-	process_input_movement(delta)
+func _process(delta):
 	process_input_actions()
 
+func _physics_process(delta):
+	process_input_movement(delta)
+
 func set_bullet():
-	bulletNode = LittleBall.new()
 	timeHandler = Timer.new()
 	timeHandler.set_wait_time(0.5)
 	timeHandler.set_one_shot(true)
@@ -51,7 +50,6 @@ func process_input_movement(delta):
 		# Turn around the character when moving
 		direction = direction.normalized()
 		lastDirection = direction
-		print(lastDirection)
 		$Pivot.look_at(translation + direction, Vector3.UP)
 		$AnimationPlayer.playback_speed = 2
 	else:
@@ -63,12 +61,12 @@ func process_input_movement(delta):
 	
 	# Apply movement to player object
 	velocity = move_and_slide(velocity, Vector3.UP)
-	
+
 func process_input_actions():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
-		bulletNode.add_instance( \
-			self, resourceBullet, $Pivot/Position3D, lastDirection)
-		
+		var bullet: LittleBall = bullet_scene.instance()
+		bullet.set_dir(lastDirection)
+		add_child(bullet)
 
 func die():
 	emit_signal("hit")
