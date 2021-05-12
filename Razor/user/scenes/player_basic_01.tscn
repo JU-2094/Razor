@@ -3,6 +3,8 @@
 [ext_resource path="res://user/assets/Sphere001.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://user/scripts/player_basic_01.gd" type="Script" id=2]
 
+
+
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.06786
 height = 0.002

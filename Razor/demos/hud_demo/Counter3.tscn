@@ -2,7 +2,7 @@
 
 [ext_resource path="res://demos/hud_demo/HUD/label_HP_bg.png" type="Texture" id=1]
 [ext_resource path="res://demos/hud_demo/HUD/font/Comfortaa-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://objects/assets/plataformer/Isometric/jewel_NE.png" type="Texture" id=3]
+[ext_resource path="res://objects/assets/plataformer/Isometric/jewel_NW.png" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -29,15 +29,24 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = -294.0
 margin_top = -301.5
-margin_right = 218.0
-margin_bottom = 210.5
+margin_right = 64.0
+margin_bottom = 60.5
 texture = ExtResource( 3 )
 stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Number" type="Label" parent="Background"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
+margin_left = 11.0
+margin_top = -2.0
+margin_right = 1.0
+margin_bottom = -2.0
 custom_fonts/font = SubResource( 1 )
 text = "10"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
