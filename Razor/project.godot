@@ -33,14 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 MusicPlayer="*res://sounds/MusicPlayer.tscn"
-
-[debug]
-
-gdscript/warnings/exclude_addons=false
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/gut/plugin.cfg" )
+PlayerData="*res://client/context/player_data.gd"
 
 [input]
 
