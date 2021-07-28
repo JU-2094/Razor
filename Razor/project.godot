@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Context",
+"language": "GDScript",
+"path": "res://client/context/context.gd"
+}, {
 "base": "KinematicBody",
 "class": "LittleBall",
 "language": "GDScript",
 "path": "res://objects/scripts/little_ball.gd"
+}, {
+"base": "Node",
+"class": "NetworkManager",
+"language": "GDScript",
+"path": "res://client/network/net_v2.gd"
 }, {
 "base": "Timer",
 "class": "TimerHandler",
@@ -20,7 +30,9 @@ _global_script_classes=[ {
 "path": "res://generic/TimerHandler.gd"
 } ]
 _global_script_class_icons={
+"Context": "",
 "LittleBall": "",
+"NetworkManager": "",
 "TimerHandler": ""
 }
 
