@@ -23,11 +23,11 @@ func _ready():
 	# res://assets/HUD/rupees_icon.png
 	#print(bombs.text)
 func _process(delta):
-	bullets.text = str(PlayerData.items["bullets"])
+	# bullets.text = str(PlayerData.items["bullets"])
 	#health_bar.Radial_ = str(PlayerData.stats["health"])
-	jewels.text =  str(PlayerData.items["jewels"])
-	coins.text =  str(PlayerData.items["coins"])
-	health_number.text = str(PlayerData.stats["health"])
-	lives.text = str(PlayerData.stats["lives"])
+	# jewels.text =  str(PlayerData.items["jewels"])
+	# coins.text =  str(PlayerData.items["coins"])
+	# health_number.text = str(PlayerData.stats["health"])
+	# lives.text = str(PlayerData.stats["lives"])
 	
 	pass

@@ -1,6 +1,7 @@
-extends Node
 
-func ini_ctx():
+class_name Context
+
+func initContext():
 	# network
 	# - security
 	# 
