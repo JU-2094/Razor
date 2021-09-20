@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://client/context/context.gd"
 }, {
-"base": "KinematicBody",
+"base": "Area",
 "class": "LittleBall",
 "language": "GDScript",
 "path": "res://objects/scripts/little_ball.gd"

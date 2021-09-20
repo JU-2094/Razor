@@ -5,13 +5,16 @@ signal hit
 # Character speed in meters per second.
 export var speed: float = 30
 export var fall_acceleration: float = 75
+export var cooldown_time: float = 0.25
+export (PackedScene) var bullet_scene
 
 var timeHandler: Timer
 var timer_is_running: bool = false
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
-var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
+# var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
 onready var player_vars = get_node("/root/PlayerData")
+
 func _ready():
 	set_bullet()
 
@@ -23,14 +26,13 @@ func _physics_process(delta):
 
 func set_bullet():
 	timeHandler = Timer.new()
-	timeHandler.set_wait_time(0.5)
+	timeHandler.set_wait_time(cooldown_time)
 	timeHandler.set_one_shot(true)
-	timeHandler.connect("timeout", self, "timeout_fire")
+	timeHandler.connect("timeout", self, "cooldown_fire")
 	add_child(timeHandler)
 	
 func bullet_available():
-	if player_vars.items["bullets"]<=0:
-		#print("out of bullets")
+	if player_vars.items["bullets"] <= 0:
 		return false
 	if timer_is_running:
 		return false
@@ -68,10 +70,10 @@ func process_input_movement(delta):
 func process_input_actions():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
 		var bullet: LittleBall = bullet_scene.instance()
-		bullet.set_dir(lastDirection)
-		add_child(bullet)
-		if player_vars.items["bullets"] > 0:
-			player_vars.items["bullets"]=player_vars.items["bullets"] - 1
+		owner.add_child(bullet)
+		bullet.transform = $Pivot/Position3D.global_transform
+		bullet.velocity = -bullet.transform.basis.z * bullet.speed
+		player_vars.items["bullets"] = player_vars.items["bullets"] - 1
 
 func die():
 	emit_signal("hit")
@@ -85,5 +87,5 @@ func _on_AreaPlayer_area_entered(area):
 	#print(area.get_name())
 	pass # Replace with function body.
 
-func timeout_fire():
+func cooldown_fire():
 	timer_is_running = false

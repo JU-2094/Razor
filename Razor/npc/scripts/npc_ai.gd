@@ -6,11 +6,11 @@ signal hit
 export var speed: int = 14
 
 var velocity: Vector3 = Vector3.ZERO
-var rng = RandomNumberGenerator.new()
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _physics_process(delta):
-    	rng.randomize()
-    	var random_number = rng.randi()
+	rng.randomize()
+	var random_number = rng.randi()
 	var direction: Vector3 = Vector3.ZERO
 	
 	if randvar%3==0:

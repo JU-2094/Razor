@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://user/assets/Sphere001.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://user/scripts/player_basic_01.gd" type="Script" id=2]
-
-
+[ext_resource path="res://objects/scenes/little_ball.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.06786
@@ -44,6 +43,7 @@ tracks/1/keys = {
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 2 )
+bullet_scene = ExtResource( 3 )
 
 [node name="Pivot" type="Spatial" parent="."]
 

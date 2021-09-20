@@ -1,0 +1,43 @@
+extends StaticBody
+
+var bullet_scene  = preload("res://objects/scenes/little_ball.tscn")
+
+var timeHandler: Timer
+var timer_is_running: bool = false
+
+func _ready():
+	set_bullet()
+
+func set_bullet():
+	timeHandler = Timer.new()
+	timeHandler.set_wait_time(0.5)
+	timeHandler.set_one_shot(true)
+	timeHandler.connect("timeout", self, "cooldown_fire")
+	add_child(timeHandler)
+	
+func _process(delta):
+	if bullet_available():
+		aim_and_shoot()
+
+func cooldown_fire():
+	timer_is_running = false
+
+func bullet_available():
+	if timer_is_running:
+		return false
+	timer_is_running = true
+	timeHandler.start()
+	return true
+
+func aim_and_shoot():
+	var bullet: LittleBall = bullet_scene.instance()
+	
+	var target = get_parent().get_node("Player") \
+		.global_transform.origin
+	
+	owner.add_child(bullet)
+	bullet.set_scale(Vector3(3,3,3))
+	bullet.transform = $Position3D.global_transform
+	var dir = (target - bullet.global_transform.origin).normalized()
+	bullet.velocity = dir * bullet.speed
+	

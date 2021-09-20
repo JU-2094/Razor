@@ -1,5 +1,5 @@
 extends Node
-var maxstats = {"health":100, "mana":100,"stamina":100,"lives":10}
+var maxstats = {"health":100, "mana":100,"stamina":100, "lives":10}
 var maxitems = {"bullets":50,"coins":100,"gems":10}
 var stats = {"health":100, "mana":100,"stamina":100,"lives":3}
 var items = {"bullets":30,"coins":0,"jewels":1}
