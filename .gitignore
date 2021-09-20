@@ -2,5 +2,10 @@
 *.scn
 *.md5
 *.stex
-*.mesh
 Razor/.import/
+.import/
+export.cfg
+export_preset.cfg
+*.translation
+.mono/
+data_*/
