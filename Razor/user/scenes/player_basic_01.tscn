@@ -5,12 +5,12 @@
 [ext_resource path="res://objects/scenes/little_ball.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 1.06786
-height = 0.002
+radius = 1.02724
+height = 0.0802763
 
 [sub_resource type="CapsuleShape" id=2]
-radius = 1.09939
-height = 0.0851614
+radius = 1.03
+height = 0.08
 
 [sub_resource type="Animation" id=3]
 resource_name = "float"
@@ -48,7 +48,7 @@ bullet_scene = ExtResource( 3 )
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Character" type="MeshInstance" parent="Pivot"]
-transform = Transform( 1, 0, 0, 0, 0.991023, 0.133689, 0, -0.133689, 0.991023, 0, 0.3, 0 )
+transform = Transform( 1, 0, 0, 0, 0.99991, 0.0133529, 0, -0.0133529, 0.99991, 0, 0.479859, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 material/1 = null
@@ -58,11 +58,15 @@ material/2 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0 )
 shape = SubResource( 1 )
 
 [node name="AreaPlayer" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaPlayer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

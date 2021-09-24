@@ -1,8 +1,8 @@
-extends Area
+extends Spatial
 
 class_name LittleBall
 
-signal exploded
+signal bullet_hit(position, body)
 
 var timerHandler: Timer
 var velocity: Vector3 = Vector3.ZERO
@@ -31,6 +31,5 @@ func lifetime_out():
 	queue_free()
 
 func _on_Shell_body_entered(body):
-	print("on_Shell_body_entered  SIGNAL")
-	emit_signal("exploded", transform.origin)
+	emit_signal("bullet_hit", transform.origin, body)
 	queue_free()

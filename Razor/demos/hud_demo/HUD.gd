@@ -6,7 +6,7 @@ extends CanvasLayer
 var jewels
 var bullets 
 var health_number
-var health_bar
+var health_bar : TextureProgress
 var coins 
 var lives
 
@@ -24,10 +24,10 @@ func _ready():
 	#print(bombs.text)
 func _process(delta):
 	# bullets.text = str(PlayerData.items["bullets"])
-	#health_bar.Radial_ = str(PlayerData.stats["health"])
+	health_bar.set_value(int(PlayerData.stats["health"]))
 	# jewels.text =  str(PlayerData.items["jewels"])
 	# coins.text =  str(PlayerData.items["coins"])
-	# health_number.text = str(PlayerData.stats["health"])
+	health_number.text = str(PlayerData.stats["health"])
 	# lives.text = str(PlayerData.stats["lives"])
 	
 	pass

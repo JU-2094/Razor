@@ -1,7 +1,8 @@
 extends StaticBody
 
-var bullet_scene  = preload("res://objects/scenes/little_ball.tscn")
+signal notify(body)
 
+var bullet_scene  = preload("res://objects/scenes/little_ball.tscn")
 var timeHandler: Timer
 var timer_is_running: bool = false
 
@@ -36,8 +37,12 @@ func aim_and_shoot():
 		.global_transform.origin
 	
 	owner.add_child(bullet)
-	bullet.set_scale(Vector3(3,3,3))
+	bullet.set_scale(Vector3(2,2,2))
 	bullet.transform = $Position3D.global_transform
+	bullet.speed = 50
+	bullet.connect("bullet_hit", self, "process_hit")
 	var dir = (target - bullet.global_transform.origin).normalized()
 	bullet.velocity = dir * bullet.speed
 	
+func process_hit(position, target):
+	emit_signal("notify", target)

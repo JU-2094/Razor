@@ -1,6 +1,6 @@
 extends KinematicBody
 
-signal hit
+signal death
 
 # Character speed in meters per second.
 export var speed: float = 30
@@ -76,8 +76,9 @@ func process_input_actions():
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1
 
 func die():
-	emit_signal("hit")
-	queue_free()
+	emit_signal("death")
+	#queue_free()
+	visible = false
 
 func _on_AreaPlayer_body_entered(body):
 	#print(body.get_name())
@@ -89,3 +90,8 @@ func _on_AreaPlayer_area_entered(area):
 
 func cooldown_fire():
 	timer_is_running = false
+
+func decrease_health():
+	player_vars.stats["health"] = player_vars.stats["health"] - 20
+	if (player_vars.stats["health"] <= 0):
+		die()

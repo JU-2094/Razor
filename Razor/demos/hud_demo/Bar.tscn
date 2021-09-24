@@ -33,6 +33,9 @@ margin_right = 50.0
 margin_bottom = 40.0
 texture = ExtResource( 2 )
 stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Number" type="Label" parent="Count/Background"]
 anchor_right = 1.0
