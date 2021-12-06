@@ -13,6 +13,5 @@ func _on_Attacker_notify(body):
 		player.decrease_health()
 	
 
-
 func _on_Player_death():
 	get_tree().quit()
