@@ -3,15 +3,17 @@ extends KinematicBody
 signal death
 
 # Character speed in meters per second.
-export var speed: float = 30
-export var fall_acceleration: float = 75
-export var cooldown_time: float = 0.25
+export (float) var speed: float = 30
+export (float) var rotation_speed: float = 1.5
+export (float) var cooldown_time: float = 0.25
 export (PackedScene) var bullet_scene
 
 var timeHandler: Timer
 var timer_is_running: bool = false
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
+var rotation_dir: float = 0
+
 # var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
 onready var player_vars = get_node("/root/PlayerData")
 
@@ -41,32 +43,27 @@ func bullet_available():
 	return true
 
 func process_input_movement(delta):
-	var direction: Vector3 = Vector3.ZERO
-	if Input.is_action_pressed("ui_right"):
-		rotate_y(deg2rad(10))
-	if Input.is_action_pressed("ui_left"):
-		rotate_y(-deg2rad(10))
-	if Input.is_action_pressed("ui_up"):
-		direction.z -= 1
-	if Input.is_action_pressed("ui_down"):
-		direction.z += 1
 	
-	if direction != Vector3.ZERO:
-		# Turn around the character when moving
-		direction = direction.normalized()
-		lastDirection = direction
-		$Pivot.look_at(translation + direction, Vector3.UP)
+	
+	rotation_dir = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
+	
+	# rotate_y(rad2deg(rotation_dir * 2))
+	if Input.action_press("ui_up"):
+		engine_force = speed
+	else:
+		engine_force = 0
+	
+	if Input.action_press("ui_down"):
+		engine_force = -speed
+			
+	if engine_force != 0:
 		$AnimationPlayer.playback_speed = 2
 	else:
 		$AnimationPlayer.playback_speed = 1
 	
-	velocity.x = direction.x * speed
-	velocity.z = direction.z * speed
-	velocity.y -= fall_acceleration * delta
-	
 	# Apply movement to player object
-	velocity = move_and_slide(velocity, Vector3.UP)
-
+	
+	
 func process_input_actions():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
 		var bullet: LittleBall = bullet_scene.instance()

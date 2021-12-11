@@ -1,0 +1,180 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://user/scenes/player_spaceship_01.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demos/basic_01/CameraPivot.gd" type="Script" id=2]
+[ext_resource path="res://demos/basic_02/tmp_attacker.gd" type="Script" id=3]
+[ext_resource path="res://demos/hud_demo/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demos/basic_02/world.gd" type="Script" id=5]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=3]
+render_priority = 5
+shader = SubResource( 2 )
+
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.74902, 0.701961, 0.701961, 1 )
+
+[sub_resource type="BoxShape" id=6]
+
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.956863, 0.521569, 0.521569, 1 )
+
+[sub_resource type="CylinderShape" id=9]
+radius = 5.0
+height = 10.0
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.262745, 0.392157, 0.905882, 1 )
+
+[sub_resource type="CylinderMesh" id=11]
+material = SubResource( 10 )
+top_radius = 5.0
+height = 10.0
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 10, 10, 2 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 0.172549, 0.592157, 0.866667, 1 )
+
+[sub_resource type="CubeMesh" id=14]
+material = SubResource( 13 )
+size = Vector3( 20, 20, 4 )
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 5 )
+
+[node name="CameraPivot" type="Position3D" parent="."]
+transform = Transform( 20, 0, 0, 0, 15.3209, 1.28558, 0, -12.8558, 1.53209, 0, 15, 10 )
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 2.98023e-08, 1, 0, 0, 0 )
+fov = 73.125
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, -0.984808, 0, 2, 0 )
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Wall" type="StaticBody" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall"]
+transform = Transform( 50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall"]
+transform = Transform( 50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="border4" type="StaticBody" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50, 0, 4.37114e-06 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="border4"]
+transform = Transform( 50, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="border4"]
+transform = Transform( 50, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="border3" type="StaticBody" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="border3"]
+transform = Transform( 50, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="border3"]
+transform = Transform( 50, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="border2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="border2"]
+transform = Transform( 50, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="border2"]
+transform = Transform( 50, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="border" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="border"]
+transform = Transform( 50, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="border"]
+transform = Transform( 50, 0, 0, 0, 10, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="Attacker" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 8.08046, -38 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Attacker"]
+shape = SubResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Attacker"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+mesh = SubResource( 11 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position3D" type="Position3D" parent="Attacker"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+
+[node name="Spatial2" type="StaticBody" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24, 0, -11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial2"]
+shape = SubResource( 12 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[connection signal="death" from="Player" to="." method="_on_spaceship_01_death"]
+[connection signal="notify" from="Attacker" to="." method="_on_Attacker_notify"]

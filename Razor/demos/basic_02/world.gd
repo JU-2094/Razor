@@ -15,3 +15,8 @@ func _on_Attacker_notify(body):
 
 func _on_Player_death():
 	get_tree().quit()
+
+
+func _on_spaceship_01_death():
+	get_tree().quit()
+	

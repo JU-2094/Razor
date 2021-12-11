@@ -8,7 +8,8 @@ var timer_is_running: bool = false
 
 func _ready():
 	set_bullet()
-
+	
+	
 func set_bullet():
 	timeHandler = Timer.new()
 	timeHandler.set_wait_time(0.5)
@@ -36,7 +37,8 @@ func aim_and_shoot():
 	var target = get_parent().get_node("Player") \
 		.global_transform.origin
 	
-	owner.add_child(bullet)
+	# LINE COMMENTED FOR TESTING, so is not attacking all time
+	# owner.add_child(bullet)
 	bullet.set_scale(Vector3(2,2,2))
 	bullet.transform = $Position3D.global_transform
 	bullet.speed = 50
