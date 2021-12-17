@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://user/scenes/player_basic_01.tscn" type="PackedScene" id=1]
+[ext_resource path="res://user/scenes/player_spaceship_01.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demos/basic_01/CameraPivot.gd" type="Script" id=2]
 [ext_resource path="res://demos/basic_02/tmp_attacker.gd" type="Script" id=3]
 [ext_resource path="res://demos/hud_demo/HUD.tscn" type="PackedScene" id=4]
@@ -64,7 +64,7 @@ __meta__ = {
 }
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+transform = Transform( -1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, 2.09926, 0 )
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
@@ -187,5 +187,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 mesh = SubResource( 14 )
 material/0 = null
 
-[connection signal="death" from="Player" to="." method="_on_Player_death"]
 [connection signal="notify" from="Attacker" to="." method="_on_Attacker_notify"]

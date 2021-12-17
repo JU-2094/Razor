@@ -4,15 +4,14 @@ signal death
 
 # Character speed in meters per second.
 export (float) var speed: float = 30
-export (float) var rotation_speed: float = 1.5
+export (float) var angular_acceleration : float = 1.5
 export (float) var cooldown_time: float = 0.25
 export (PackedScene) var bullet_scene
 
 var timeHandler: Timer
 var timer_is_running: bool = false
 var lastDirection: Vector3 = Vector3.ZERO
-var velocity: Vector3 = Vector3.ZERO
-var rotation_dir: float = 0
+var velocity: Vector3 = Vector3.FORWARD
 
 # var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
 onready var player_vars = get_node("/root/PlayerData")
@@ -43,26 +42,21 @@ func bullet_available():
 	return true
 
 func process_input_movement(delta):
+	var rot_dir = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	velocity = Vector3(
+		0, 
+		0, 
+		Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")).normalized() 
 	
-	
-	rotation_dir = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
-	
-	# rotate_y(rad2deg(rotation_dir * 2))
-	if Input.action_press("ui_up"):
-		engine_force = speed
-	else:
-		engine_force = 0
-	
-	if Input.action_press("ui_down"):
-		engine_force = -speed
-			
-	if engine_force != 0:
+	if rot_dir != 0:
+		rotation.y = lerp_angle(rotation.y, rotation.y - (PI/2 * rot_dir), delta * angular_acceleration)
+	if velocity != Vector3.ZERO:
 		$AnimationPlayer.playback_speed = 2
 	else:
 		$AnimationPlayer.playback_speed = 1
 	
 	# Apply movement to player object
-	
+	velocity = move_and_slide(velocity.rotated(Vector3.UP, rotation.y) * speed, Vector3.UP)
 	
 func process_input_actions():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
