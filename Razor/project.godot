@@ -47,6 +47,10 @@ config/icon="res://icon.png"
 MusicPlayer="*res://sounds/MusicPlayer.tscn"
 PlayerData="*res://client/context/player_data.gd"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/protobuf/plugin.cfg" )
+
 [input]
 
 ui_accept={
