@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message PlayerInfo {
+    message TypeNode {
+        int32 instance = 1;
+        int32 action_a = 2;
+        int32 action_b = 3;
+    }
+    TypeNode type_node = 1;
+    int32 health = 2;
+    repeated int32 global_position = 3;
+    repeated int32 rotation = 4;
+}
+
+message CommGame {
+    enum State {
+        UNKOWN = 0;
+        STARTED = 1;
+        WAITING = 2;
+        CLOSED = 3;
+    }
+    State state = 1;
+    repeated PlayerInfo = 2;
+}
+
