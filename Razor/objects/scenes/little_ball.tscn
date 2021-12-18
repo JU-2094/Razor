@@ -9,9 +9,7 @@ height = 1.0
 [sub_resource type="SphereShape" id=2]
 radius = 0.504546
 
-[node name="Spatial" type="Spatial" groups=[
-"bullets",
-]]
+[node name="Spatial" type="Spatial" groups=["bullets"]]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

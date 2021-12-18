@@ -4,7 +4,8 @@ signal death
 
 # Character speed in meters per second.
 export (float) var speed: float = 30
-export (float) var angular_acceleration : float = 1.5
+export (float) var angular_acceleration : float = 3
+export var fall_acceleration: float = 75
 export (float) var cooldown_time: float = 0.25
 export (PackedScene) var bullet_scene
 
@@ -45,7 +46,7 @@ func process_input_movement(delta):
 	var rot_dir = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	velocity = Vector3(
 		0, 
-		0, 
+		-fall_acceleration * delta, 
 		Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")).normalized() 
 	
 	if rot_dir != 0:
@@ -63,7 +64,7 @@ func process_input_actions():
 		var bullet: LittleBall = bullet_scene.instance()
 		owner.add_child(bullet)
 		bullet.transform = $Pivot/Position3D.global_transform
-		bullet.velocity = -bullet.transform.basis.z * bullet.speed
+		bullet.velocity = bullet.transform.basis.z * bullet.speed
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1
 
 func die():

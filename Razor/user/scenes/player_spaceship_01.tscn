@@ -64,13 +64,15 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="Position3D" type="Position3D" parent="Pivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0871134, 0.985422 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.511012, 0.91338 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.483066, 0 )
 shape = SubResource( 2 )
 
 [node name="Area" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.516172, 0 )

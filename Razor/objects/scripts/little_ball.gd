@@ -8,7 +8,7 @@ var timerHandler: Timer
 var velocity: Vector3 = Vector3.ZERO
 var init: bool = false
 export var speed: int = 100
-export var lifetime: float = 2
+export var lifetime: float = 3
 
 func _ready():
 	timerHandler = Timer.new()
@@ -22,8 +22,10 @@ func set_dir(direction: Vector3):
 	velocity = Vector3.FORWARD * speed
 	velocity = velocity.rotated(Vector3.UP, rotation.y)
 
+func aim(rotation: float):
+	velocity = Vector3.FORWARD.rotated(Vector3.UP, rotation) * speed
+
 func _physics_process(delta):
-	velocity += Vector3.FORWARD * delta
 	look_at(transform.origin + velocity.normalized(), Vector3.UP)
 	transform.origin += velocity * delta
 
@@ -32,4 +34,4 @@ func lifetime_out():
 
 func _on_Shell_body_entered(body):
 	emit_signal("bullet_hit", transform.origin, body)
-	queue_free()
+	#queue_free()
