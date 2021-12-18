@@ -20,6 +20,6 @@ message CommGame {
         CLOSED = 3;
     }
     State state = 1;
-    repeated PlayerInfo = 2;
+    repeated PlayerInfo player_info = 2;
 }
 
