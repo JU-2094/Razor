@@ -3,38 +3,30 @@ extends Node
 class_name Context
 
 const MoonProto = preload("res://client/context/moon_proto.gd")
-const Network = preload("res://client/network/net_v2.gd")
 
-var netHandler = null
 var player_data = {}
 
 func _ready():
-	netHandler = Network.new()
-	
-func initContext():
-	# network
-	# - security
-	# 
 	pass
-
+	
 func ini_multiplayer():
 	# network
 	pass
 	
 func encode_player_data():
 	var data = MoonProto.PlayerInfo.new()
-	var type = MoonProto.PlayerInfo.TypeNode.new()
+	#var type = MoonProto.PlayerInfo.TypeNode.new()
 	
-	data.set_type_node(type)
+	#data.set_type_node(type)
 	data.set_health(100)
-	data.set_global_position([10,20,30])
-	data.set_rotation([0,0,0])
-	netHandler.set_data(data)
+	data.add_global_position(10)
+	data.add_rotation(14)
+	return data
 	
 	
-func decode_player_data():
-	for item_key in netHandler.players_net.keys():
-		player_data[item_key] = _decode_player(netHandler.players_net[item_key])
+func decode_player_data(players):
+	for item_key in players.keys():
+		player_data[item_key] = _decode_player(players[item_key])
 	
 func _decode_player(bytes):
 	var player = MoonProto.PlayerInfo.new()

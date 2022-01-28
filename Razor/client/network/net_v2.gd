@@ -2,10 +2,8 @@ extends Node
 
 class_name NetworkManager
 
-var SERVER_IP: String = "192.168.1.166"
-var SERVER_PORT: int = 50000
-var CLIENT_PORT: int = 60000
-var P2P_PORT: int =  31400
+var SERVER_IP: String = "127.0.0.1"
+var SERVER_PORT: int = 6007
 var MAX_CLIENTS: int = 32
 
 var players_net = {}
@@ -57,4 +55,7 @@ func set_data(data):
 # This will be executed in the server
 remote func register_player(data):	
 	var id = get_tree().get_rpc_sender_id()
+	print("REGISTER PLAYER")
+	print("id= " + str(id))
+	print("data= " + str(data))
 	players_net[id] = data
