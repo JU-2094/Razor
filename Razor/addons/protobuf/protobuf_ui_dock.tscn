@@ -72,13 +72,13 @@ margin_top = 200.0
 margin_right = 700.0
 margin_bottom = 500.0
 popup_exclusive = true
-window_title = "Открыть файл"
+window_title = "Open a File"
 resizable = true
 mode = 0
 access = 2
 filters = PoolStringArray( "*.proto; Google Protobuf File" )
-current_dir = "C:/Users/robo/Documents/Новый3_1"
-current_path = "C:/Users/robo/Documents/Новый3_1/"
+current_dir = "/home/misha/Projects/github/Razor/Razor"
+current_path = "/home/misha/Projects/github/Razor/Razor/"
 
 [node name="InputFileDialog2" type="FileDialog" parent="."]
 margin_left = 200.0
@@ -86,13 +86,13 @@ margin_top = 200.0
 margin_right = 700.0
 margin_bottom = 500.0
 popup_exclusive = true
-window_title = "Открыть файл"
+window_title = "Open a File"
 resizable = true
 mode = 0
 access = 2
 filters = PoolStringArray( "*.proto; Google Protobuf File" )
-current_dir = "C:/Users/robo/Documents/Новый3_1"
-current_path = "C:/Users/robo/Documents/Новый3_1/"
+current_dir = "/home/misha/Projects/github/Razor/Razor"
+current_path = "/home/misha/Projects/github/Razor/Razor/"
 
 [node name="OutputFileDialog" type="FileDialog" parent="."]
 margin_left = 200.0
@@ -103,14 +103,13 @@ popup_exclusive = true
 resizable = true
 access = 2
 filters = PoolStringArray( "*.gd; GDScript" )
-current_dir = "C:/Users/robo/Documents/Новый3_1"
-current_path = "C:/Users/robo/Documents/Новый3_1/"
+current_dir = "/home/misha/Projects/github/Razor/Razor"
+current_path = "/home/misha/Projects/github/Razor/Razor/"
 
 [node name="FilesErrorAcceptDialog" type="AcceptDialog" parent="."]
 margin_right = 83.0
 margin_bottom = 58.0
 popup_exclusive = true
-window_title = "Alert!"
 dialog_text = "Need select both output & input files!"
 
 [node name="SuccessAcceptDialog" type="AcceptDialog" parent="."]
@@ -119,7 +118,6 @@ margin_top = 22.0
 margin_right = 250.0
 margin_bottom = 80.0
 popup_exclusive = true
-window_title = "Alert!"
 dialog_text = "Compile success done."
 
 [node name="FailAcceptDialog" type="AcceptDialog" parent="."]
@@ -128,7 +126,6 @@ margin_top = 22.0
 margin_right = 250.0
 margin_bottom = 80.0
 popup_exclusive = true
-window_title = "Alert!"
 dialog_text = "Compile fail. See details in console output."
 
 [connection signal="pressed" from="HBoxContainer/InputFileButton" to="." method="_on_InputFileButton_pressed"]

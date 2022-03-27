@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://MB_Toolkit/features/body/MB_can_shoot.gd" type="Script" id=1]
+[ext_resource path="res://objects/scenes/little_ball.tscn" type="PackedScene" id=2]
+
+[node name="shooter" type="Node2D"]
+script = ExtResource( 1 )
+bullet_scene = ExtResource( 2 )
