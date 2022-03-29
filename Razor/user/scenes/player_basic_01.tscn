@@ -42,6 +42,7 @@ tracks/1/keys = {
 }
 
 [node name="Player" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154012, 0, 0.138848 )
 script = ExtResource( 2 )
 bullet_scene = ExtResource( 3 )
 
@@ -55,10 +56,10 @@ material/1 = null
 material/2 = null
 
 [node name="Position3D" type="Position3D" parent="Pivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0810403, -1.02319 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0 )
+transform = Transform( 7.63966, 0, 0, 0, 7.63966, 0, 0, 0, 7.63966, 0, 0.35, 0 )
 shape = SubResource( 1 )
 
 [node name="AreaPlayer" type="Area" parent="."]
