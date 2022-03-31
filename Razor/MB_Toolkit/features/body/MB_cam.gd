@@ -11,9 +11,6 @@ func _process(delta):
 	# Relative position to the world
 	var pos: Vector3 = global_transform.origin
 	
-	print(pos)
-	print(target)
-	
 	pos.y = height_from_floor
 	pos.x = target.x
 	pos.z = target.z - distance
