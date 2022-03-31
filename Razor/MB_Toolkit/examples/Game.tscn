@@ -9,7 +9,7 @@
 [node name="world" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.34746, 0 )
 
-[node name="CameraPivot" parent="." instance=ExtResource( 4 )]
+[node name="MB_cam" parent="." instance=ExtResource( 4 )]
 transform = Transform( -10, 6.18172e-07, -6.18172e-08, 0, 7.07107, 0.707107, 8.74228e-07, 7.07107, -0.707107, 0, 20, -15 )
 target_path = NodePath("../Entity")
 
