@@ -2,6 +2,7 @@ extends Node2D
 
 export var cooldown_time: float = 0.25
 export (PackedScene) var bullet_scene
+export (NodePath) var instance_position
 
 var timeHandler: Timer
 var timer_is_running: bool = false
@@ -39,6 +40,6 @@ func shoot_process():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
 		var bullet: LittleBall = bullet_scene.instance()
 		get_parent().owner.add_child(bullet)
-		bullet.transform = get_parent().global_transform
+		bullet.transform = get_node(instance_position).global_transform
 		bullet.velocity = bullet.transform.basis.z * bullet.speed
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1

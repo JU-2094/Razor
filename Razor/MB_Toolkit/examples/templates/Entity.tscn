@@ -9,8 +9,12 @@
 [node name="Body" parent="." instance=ExtResource( 3 )]
 
 [node name="shooter" parent="Body" instance=ExtResource( 1 )]
+instance_position = NodePath("../Position3D")
 
 [node name="movement" parent="Body" instance=ExtResource( 2 )]
+
+[node name="Position3D" type="Position3D" parent="Body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.21293 )
 
 [node name="Controllers" type="Spatial" parent="."]
 
