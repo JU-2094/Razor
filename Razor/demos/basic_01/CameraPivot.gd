@@ -1,6 +1,6 @@
 extends Position3D
 
-export var distance: float = 15.0
+export var distance: float = 10.0
 
 func _process(delta):
 	var target: Vector3 = get_parent().get_node("Player") \

@@ -10,7 +10,7 @@
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.34746, 0 )
 
 [node name="MB_cam" parent="." instance=ExtResource( 4 )]
-transform = Transform( -10, 6.18172e-07, -6.18172e-08, 0, 7.07107, 0.707107, 8.74228e-07, 7.07107, -0.707107, 0, 10, -10 )
+transform = Transform( -1, 6.18172e-08, -6.18172e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 10, -10 )
 distance = 10.0
 height_from_floor = 10.0
 target_path = NodePath("../Entity")

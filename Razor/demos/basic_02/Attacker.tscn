@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://demos/basic_02/tmp_attacker.gd" type="Script" id=1]
+
+[sub_resource type="CylinderShape" id=9]
+radius = 5.0
+height = 10.0
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.262745, 0.392157, 0.905882, 1 )
+
+[sub_resource type="CylinderMesh" id=11]
+material = SubResource( 10 )
+top_radius = 5.0
+height = 10.0
+
+[node name="Attacker" type="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 8.08046, -38 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+mesh = SubResource( 11 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )

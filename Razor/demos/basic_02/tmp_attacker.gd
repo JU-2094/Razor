@@ -38,7 +38,7 @@ func aim_and_shoot():
 		.global_transform.origin
 	
 	# LINE COMMENTED FOR TESTING, so is not attacking all time
-	# owner.add_child(bullet)
+	owner.add_child(bullet)
 	bullet.set_scale(Vector3(2,2,2))
 	bullet.transform = $Position3D.global_transform
 	bullet.speed = 50

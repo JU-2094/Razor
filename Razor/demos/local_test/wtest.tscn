@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://objects/scenes/Bolt.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demos/basic_01/world_01.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 10, 20, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 20, 40, 2 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 100, 1, 100 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 200, 2, 200 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.152941, 0.164706, 0.27451, 1 )
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Bolt" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.987646, 7.97972, 81.9683 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.893293, -0.442159, 0.0807685, 0.40774, 0.872776, 0.268349, -0.189145, -0.206781, 0.95993, -63.8383, 28.9087, 91.55 )
+light_color = Color( 0.815686, 0.815686, 0.662745, 1 )
+light_energy = 2.19
+light_indirect_energy = 0.0
+shadow_enabled = true
+
+[node name="CameraPivot" type="Position3D" parent="."]
+transform = Transform( 10, 0, 0, 0, 7.66044, 0.642788, 0, -6.42788, 0.766044, 0, 11, 87 )
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 2.98023e-08, 1, 0, 0, 0 )
+fov = 73.125
+
+[node name="Wall" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 62.4234 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -33 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -33 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="ground" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="ground"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.987646, -0.020278, 0.968346 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )

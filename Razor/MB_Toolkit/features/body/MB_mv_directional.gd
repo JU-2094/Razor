@@ -18,6 +18,7 @@ func _physics_process(delta):
 
 
 func ft_process(delta):
+	
 	var direction: Vector3 = Vector3.ZERO
 	if Input.is_action_pressed("ui_right"):
 		direction.x -= 1

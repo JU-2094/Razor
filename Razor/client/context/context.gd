@@ -41,5 +41,4 @@ func _decode_player(bytes):
 	print(player.get_global_position())
 	print(player.get_rotation())
 	
-	
 	return 0

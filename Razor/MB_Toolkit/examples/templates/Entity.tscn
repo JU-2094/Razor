@@ -19,4 +19,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.21293 )
 [node name="Controllers" type="Spatial" parent="."]
 
 [node name="Objects" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0939184, 0.928096 )
