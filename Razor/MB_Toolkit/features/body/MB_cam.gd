@@ -1,7 +1,7 @@
 extends Position3D
 
-export var distance: float = 15.0
-export var height_from_floor: float = 20.0
+export var distance: float = 1.0
+export var height_from_floor: float = 1.0
 export(NodePath) var target_path
 
 func _process(delta):
@@ -11,9 +11,9 @@ func _process(delta):
 	# Relative position to the world
 	# var pos: Vector3 = transform
 	print("camera translation: ", translation)
-	translation.y = target.y + height_from_floor
+	#translation.y = target.y + height_from_floor
 	translation.x = target.x
-	translation.z = target.z - distance
+	#translation.z = target.z + distance
 	
 	# pos.y = target.y + height_from_floor
 	# pos.x = target.x
