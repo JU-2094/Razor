@@ -38,8 +38,10 @@ func cooldown_fire():
 
 func shoot_process():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
-		var bullet: LittleBall = bullet_scene.instance()
+		var bullet = bullet_scene.instance()
 		get_parent().owner.add_child(bullet)
-		bullet.transform = get_node(instance_position).global_transform
+		var shoot_pivot = get_node(instance_position)
+		
+		bullet.global_translation = shoot_pivot.global_translation
 		bullet.velocity = bullet.transform.basis.z * bullet.speed
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1
