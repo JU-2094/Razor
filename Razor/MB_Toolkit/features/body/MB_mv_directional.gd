@@ -4,10 +4,6 @@ export var fall_acceleration: float = 75
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
 var body: KinematicBody
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,7 +11,6 @@ func _ready():
 
 func _physics_process(delta):
 	ft_process(delta)
-
 
 func ft_process(delta):
 	
@@ -32,8 +27,13 @@ func ft_process(delta):
 		# Turn around the character when moving
 		direction = direction.normalized()
 		lastDirection = direction
-		body.look_at(body.translation - direction, Vector3.UP)
-		
+		var dot_product = Vector2(direction.x, direction.z).dot(Vector2(0,1))
+		var degrees = rad2deg(acos(dot_product))
+		var angle = degrees if direction.x >= 0 else degrees * -1
+		# dot product 1 - 0 degrees, -1 - 180 degrees
+		# x is the orientation
+		body.set_rotation_degrees(Vector3(0,angle,0))
+
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
 	velocity.y -= fall_acceleration * delta

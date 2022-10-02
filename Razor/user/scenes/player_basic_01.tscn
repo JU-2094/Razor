@@ -51,9 +51,6 @@ bullet_scene = ExtResource( 3 )
 [node name="Character" type="MeshInstance" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, 0.991022, 0.133689, 0, -0.133689, 0.991022, 0, 0.3, 0 )
 mesh = ExtResource( 1 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="Position3D" type="Position3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0810403, -1.02319 )

@@ -43,5 +43,6 @@ func shoot_process():
 		var shoot_pivot = get_node(instance_position)
 		
 		bullet.global_translation = shoot_pivot.global_translation
-		bullet.velocity = bullet.transform.basis.z * bullet.speed
+		var temp_velocity = bullet.transform.basis.z * bullet.speed
+		bullet.velocity = temp_velocity.rotated(Vector3.UP, get_parent().rotation.y)
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1

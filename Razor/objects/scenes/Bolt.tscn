@@ -79,6 +79,7 @@ color_ramp = SubResource( 13 )
 
 [node name="Bolt" type="RigidBody"]
 script = ExtResource( 3 )
+speed = 50
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

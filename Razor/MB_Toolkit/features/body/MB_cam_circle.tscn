@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://MB_Toolkit/features/body/MB_cam_circle.gd" type="Script" id=1]
+
+[node name="CameraPivot" type="Position3D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 2.98023e-08, 1, 0, 0, 0 )
+current = true
+fov = 73.125
+__meta__ = {
+"_edit_lock_": true
+}
