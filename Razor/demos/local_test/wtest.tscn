@@ -26,9 +26,9 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 2, 57 )
 
 [node name="CameraPivot" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, -64, 6, 50 )
-distance = 0.0
-height_from_floor = 6.0
+transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, -64, 7, 45 )
+distance = 15.0
+height_from_floor = 7.0
 target_path = NodePath("../Player")
 
 [node name="Wall" type="StaticBody" parent="."]
