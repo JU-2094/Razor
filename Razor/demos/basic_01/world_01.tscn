@@ -3,8 +3,8 @@
 [ext_resource path="res://demos/basic_01/world_01.gd" type="Script" id=2]
 [ext_resource path="res://demos/basic_01/CameraPivot.gd" type="Script" id=3]
 [ext_resource path="res://demos/hud_demo/HUD.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/scenes/spaceship.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/scenes/coinGold.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/spaceship.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/coinGold.tscn" type="PackedScene" id=6]
 [ext_resource path="res://demos/touchcontrols_demo/touchscreen.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
@@ -56,7 +56,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Wall"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="ground" type="StaticBody" parent="."]
 

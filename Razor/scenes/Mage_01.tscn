@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/models/character_mage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/materials/BrownDark.material" type="Material" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.592789
+height = 1.11385
+
+[sub_resource type="PlaneMesh" id=1]
+material = ExtResource( 2 )
+size = Vector2( 0.8, 1.2 )
+subdivide_width = 15
+subdivide_depth = 15
+
+[node name="Mage_01" type="KinematicBody"]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.09037, 0 )
+shape = SubResource( 3 )
+
+[node name="character_mage" parent="." instance=ExtResource( 1 )]
+
+[node name="SoftBody" type="SoftBody" parent="character_mage"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0436106, 0.557037, -1.17066 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+collision_layer = 2
+collision_mask = 2
+total_mass = 120.0
+pinned_points = [ 6, 4, 5, 7, 8, 9, 10, 11, 12, 22, 21 ]
+attachments/0/point_index = 6
+attachments/0/spatial_attachment_path = NodePath("")
+attachments/0/offset = Vector3( 0, 0, 0 )
+attachments/1/point_index = 4
+attachments/1/spatial_attachment_path = NodePath("")
+attachments/1/offset = Vector3( 0, 0, 0 )
+attachments/2/point_index = 5
+attachments/2/spatial_attachment_path = NodePath("")
+attachments/2/offset = Vector3( 0, 0, 0 )
+attachments/3/point_index = 7
+attachments/3/spatial_attachment_path = NodePath("")
+attachments/3/offset = Vector3( 0, 0, 0 )
+attachments/4/point_index = 8
+attachments/4/spatial_attachment_path = NodePath("")
+attachments/4/offset = Vector3( 0, 0, 0 )
+attachments/5/point_index = 9
+attachments/5/spatial_attachment_path = NodePath("")
+attachments/5/offset = Vector3( 0, 0, 0 )
+attachments/6/point_index = 10
+attachments/6/spatial_attachment_path = NodePath("")
+attachments/6/offset = Vector3( 0, 0, 0 )
+attachments/7/point_index = 11
+attachments/7/spatial_attachment_path = NodePath("")
+attachments/7/offset = Vector3( 0, 0, 0 )
+attachments/8/point_index = 12
+attachments/8/spatial_attachment_path = NodePath("")
+attachments/8/offset = Vector3( 0, 0, 0 )
+attachments/9/point_index = 22
+attachments/9/spatial_attachment_path = NodePath("")
+attachments/9/offset = Vector3( 0, 0, 0 )
+attachments/10/point_index = 21
+attachments/10/spatial_attachment_path = NodePath("")
+attachments/10/offset = Vector3( 0, 0, 0 )
