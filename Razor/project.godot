@@ -247,7 +247,7 @@ LastOpenedFiles="*res://addons/file-editor/scripts/LastOpenedFiles.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/file-editor/plugin.cfg", "res://addons/protobuf/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/protobuf/plugin.cfg" )
 
 [gdnative]
 

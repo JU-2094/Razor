@@ -2,7 +2,7 @@ extends Spatial
 
 class_name LittleBall
 
-signal bullet_hit(position, body)
+signal bullet_hit(position, body, type)
 
 var timerHandler: Timer
 var velocity: Vector3 = Vector3.ZERO
@@ -32,6 +32,7 @@ func _physics_process(delta):
 func lifetime_out():
 	queue_free()
 
-func _on_Shell_body_entered(body):
-	emit_signal("bullet_hit", transform.origin, body)
-	#queue_free()
+func _on_Area_body_entered(body):
+	# print('bullet hit sth-', body)
+	emit_signal("bullet_hit", transform.origin, body, "fire")
+	queue_free()

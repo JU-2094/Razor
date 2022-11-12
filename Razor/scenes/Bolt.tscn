@@ -78,6 +78,8 @@ color_ramp = SubResource( 13 )
 [sub_resource type="QuadMesh" id=11]
 
 [node name="Bolt" type="RigidBody"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource( 3 )
 speed = 50
 
@@ -97,3 +99,12 @@ lifetime = 2.3
 local_coords = false
 process_material = SubResource( 10 )
 draw_pass_1 = SubResource( 11 )
+
+[node name="Area" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
