@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Mage_01.tscn" type="PackedScene" id=1]
-[ext_resource path="res://mbtoolkit/features/body/MB_mv_directional.tscn" type="PackedScene" id=2]
+[ext_resource path="res://mbtoolkit/features/body/MB_mv_directional_camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mbtoolkit/features/body/MB_can_shoot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Bolt.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/godot/player_mb_mage.gd" type="Script" id=5]
 
 [node name="Player" type="Spatial"]
+script = ExtResource( 5 )
 
 [node name="Body" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0117595 )
@@ -13,10 +15,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0117595 )
 [node name="Position3D" type="Position3D" parent="Body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.860723, 0.872188 )
 
-[node name="movement" parent="Body" instance=ExtResource( 2 )]
-speed = 10.0
-fall_acceleration = 50.0
-
 [node name="shooter" parent="Body" instance=ExtResource( 3 )]
 bullet_scene = ExtResource( 4 )
 instance_position = NodePath("../Position3D")
+
+[node name="movement" parent="Body" instance=ExtResource( 2 )]
+speed = 10.0
+
+[connection signal="camera_info" from="." to="Body/movement" method="_on_Player_camera_info"]

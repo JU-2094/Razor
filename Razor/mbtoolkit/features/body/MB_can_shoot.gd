@@ -13,7 +13,7 @@ var timer_is_running: bool = false
 onready var player_vars = get_node("/root/PlayerData")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_bullet()
+	set_bullet()	
 	pass # Replace with function body.
 func _process(delta):
 	shoot_process()

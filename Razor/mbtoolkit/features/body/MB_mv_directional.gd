@@ -1,6 +1,7 @@
 extends Node2D
 export var speed: float = 30
 export var fall_acceleration: float = 75
+
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
 var body: KinematicBody
@@ -9,7 +10,7 @@ var body: KinematicBody
 func _ready():
 	body = get_parent()
 
-func _physics_process(delta):
+func _physics_process(dlta):
 	ft_process(delta)
 
 func ft_process(delta):
