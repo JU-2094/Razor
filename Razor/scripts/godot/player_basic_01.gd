@@ -1,19 +1,19 @@
-extends KinematicBody
+extends CharacterBody3D
 
 signal death
 
 # Character speed in meters per second.
-export var speed: float = 30
-export var fall_acceleration: float = 75
-export var cooldown_time: float = 0.25
-export (PackedScene) var bullet_scene
+@export var speed: float = 30
+@export var fall_acceleration: float = 75
+@export var cooldown_time: float = 0.25
+@export (PackedScene) var bullet_scene
 
 var timeHandler: Timer
 var timer_is_running: bool = false
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
 # var bullet_scene = preload("res://objects/scenes/little_ball.tscn")
-onready var player_vars = get_node("/root/PlayerData")
+@onready var player_vars = get_node("/root/PlayerData")
 
 func _ready():
 	set_bullet()
@@ -28,7 +28,7 @@ func set_bullet():
 	timeHandler = Timer.new()
 	timeHandler.set_wait_time(cooldown_time)
 	timeHandler.set_one_shot(true)
-	timeHandler.connect("timeout", self, "cooldown_fire")
+	timeHandler.connect("timeout",Callable(self,"cooldown_fire"))
 	add_child(timeHandler)
 	
 func bullet_available():
@@ -55,7 +55,7 @@ func process_input_movement(delta):
 		# Turn around the character when moving
 		direction = direction.normalized()
 		lastDirection = direction
-		$Pivot.look_at(translation + direction, Vector3.UP)
+		$Pivot.look_at(position + direction, Vector3.UP)
 		$AnimationPlayer.playback_speed = 2
 	else:
 		$AnimationPlayer.playback_speed = 1
@@ -65,13 +65,16 @@ func process_input_movement(delta):
 	velocity.y -= fall_acceleration * delta
 	
 	# Apply movement to player object
-	velocity = move_and_slide(velocity, Vector3.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector3.UP)
+	move_and_slide()
+	velocity = velocity
 
 func process_input_actions():
 	if Input.is_action_pressed("ui_action1") and bullet_available():
-		var bullet: LittleBall = bullet_scene.instance()
+		var bullet: LittleBall = bullet_scene.instantiate()
 		owner.add_child(bullet)
-		bullet.transform = $Pivot/Position3D.global_transform
+		bullet.transform = $Pivot/Marker3D.global_transform
 		bullet.velocity = -bullet.transform.basis.z * bullet.speed
 		player_vars.items["bullets"] = player_vars.items["bullets"] - 1
 

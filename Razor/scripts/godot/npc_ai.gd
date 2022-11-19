@@ -1,9 +1,9 @@
-extends KinematicBody
+extends CharacterBody3D
 
 signal hit
 
 # Character speed in meters per second.
-export var speed: int = 14
+@export var speed: int = 14
 
 var velocity: Vector3 = Vector3.ZERO
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -25,7 +25,7 @@ func _physics_process(delta):
 	if direction != Vector3.ZERO:
 		# Turn around the character when moving
 		direction = direction.normalized()
-		$Pivot.look_at(translation + direction, Vector3.UP)
+		$Pivot.look_at(position + direction, Vector3.UP)
 		#$AnimationPlayer.playback_speed = 2
 	else:
 		#$AnimationPlayer.playback_speed = 1
@@ -38,7 +38,10 @@ func _physics_process(delta):
 		pass
 	
 	# Apply movement to player object
-	velocity = move_and_slide(velocity, Vector3.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector3.UP)
+	move_and_slide()
+	velocity = velocity
 	
 func die():
 	emit_signal("hit")

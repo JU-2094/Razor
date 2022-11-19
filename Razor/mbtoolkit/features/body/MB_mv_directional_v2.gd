@@ -1,7 +1,7 @@
 extends Node2D
-export (float) var speed: float = 30
-export (float) var angular_acceleration : float = 3
-export var fall_acceleration: float = 75
+@export (float) var speed: float = 30
+@export (float) var angular_acceleration : float = 3
+@export var fall_acceleration: float = 75
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.FORWARD
 # Declare member variables here. Examples:
@@ -23,4 +23,7 @@ func ft_process(delta):
 	if rot_dir != 0:
 		get_parent().rotation.y = lerp_angle(get_parent().rotation.y, get_parent().rotation.y - (PI/2 * rot_dir), delta * angular_acceleration)
 	#Here animation if exist:
-	velocity = get_parent().move_and_slide(velocity.rotated(Vector3.UP, get_parent().rotation.y) * speed, Vector3.UP)
+	.set_velocity(velocity.rotated(Vector3.UP, get_parent().rotation.y) * speed)
+	.set_up_direction(Vector3.UP)
+	.move_and_slide()
+	velocity = get_parent().velocity

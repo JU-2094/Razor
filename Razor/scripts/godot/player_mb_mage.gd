@@ -1,8 +1,8 @@
-extends Spatial
+extends Node3D
 
 signal camera_info
 
-export(NodePath) var cameraNode
+@export var cameraNode: NodePath
 var camera
 
 func _ready():

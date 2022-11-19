@@ -5,17 +5,17 @@
 [ext_resource path="res://mbtoolkit/features/body/MB_can_shoot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Bolt.tscn" type="PackedScene" id=4]
 
-[node name="Player" type="Spatial"]
+[node name="Player" type="Node3D"]
 
 [node name="Body" parent="." instance=ExtResource( 1 )]
 
 [node name="shooter" parent="Body" instance=ExtResource( 3 )]
 bullet_scene = ExtResource( 4 )
-instance_position = NodePath("../Position3D")
+instance_position = NodePath("../Marker3D")
 
 [node name="movement" parent="Body" instance=ExtResource( 2 )]
 speed = 10.0
 fall_acceleration = 20.0
 
-[node name="Position3D" type="Position3D" parent="Body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469824, 0.506916, 0 )
+[node name="Marker3D" type="Marker3D" parent="Body"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469824, 0.506916, 0 )

@@ -1,17 +1,17 @@
-tool
+@tool
 class_name XRTHighlightVisible
-extends Spatial
+extends Node3D
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Turn off until requested
+	# Turn unchecked until requested
 	if not Engine.editor_hint:
 		visible = false
 
 	# Hook the highlight update
-	get_parent().connect("highlight_updated", self, "_on_highlight_updated")
+	get_parent().connect("highlight_updated",Callable(self,"_on_highlight_updated"))
 
 
 # Called when the pickable highlight changes
@@ -20,7 +20,7 @@ func _on_highlight_updated(pickable, enable: bool) -> void:
 
 
 # This method verifies the node
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Verify parent supports highlighting
 	var parent := get_parent()
 	if not parent or not parent.has_signal("highlight_updated"):

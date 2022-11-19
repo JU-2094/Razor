@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_TurnMovement
 extends MovementProvider
 
@@ -7,7 +7,7 @@ extends MovementProvider
 ##
 ## @desc:
 ##     This script provides turning support for the player. This script works
-##     with the PlayerBody attached to the players ARVROrigin.
+##     with the PlayerBody attached to the players XROrigin3D.
 ##
 ##     The following types of turning are supported:
 ##      - Snap turning
@@ -16,19 +16,19 @@ extends MovementProvider
 
 
 ## Movement provider order
-export var order := 5
+@export var order := 5
 
 ## Use smooth rotation (may cause motion sickness)
-export var smooth_rotation := false
+@export var smooth_rotation := false
 
 ## Smooth turn speed in radians per second
-export var smooth_turn_speed := 2.0
+@export var smooth_turn_speed := 2.0
 
 ## Seconds per step (at maximum turn rate)
-export var step_turn_delay := 0.2
+@export var step_turn_delay := 0.2
 
 ## Step turn angle in degrees
-export var step_turn_angle := 20.0
+@export var step_turn_angle := 20.0
 
 
 # Turn step accumulator
@@ -36,7 +36,7 @@ var _turn_step := 0.0
 
 
 # Controller node
-onready var _controller : ARVRController = get_parent()
+@onready var _controller : XRController3D = get_parent()
 
 
 # Perform jump movement
@@ -64,14 +64,14 @@ func physics_movement(delta: float, player_body: PlayerBody, _disabled: bool):
 
 	# Turn one step in the requested direction
 	_turn_step = step_turn_delay
-	_rotate_player(player_body, deg2rad(step_turn_angle) * sign(left_right))
+	_rotate_player(player_body, deg_to_rad(step_turn_angle) * sign(left_right))
 
 
 # Rotate the origin node around the camera
 func _rotate_player(player_body: PlayerBody, angle: float):
-	var t1 := Transform()
-	var t2 := Transform()
-	var rot := Transform()
+	var t1 := Transform3D()
+	var t2 := Transform3D()
+	var rot := Transform3D()
 
 	t1.origin = -player_body.camera_node.transform.origin
 	t2.origin = player_body.camera_node.transform.origin
@@ -80,11 +80,11 @@ func _rotate_player(player_body: PlayerBody, angle: float):
 
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
+	if !test_controller or !test_controller is XRController3D:
 		return "Unable to find ARVR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

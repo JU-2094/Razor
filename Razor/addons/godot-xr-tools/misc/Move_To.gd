@@ -6,7 +6,7 @@ extends Node
 ## Move To node
 ##
 ## @desc:
-##     This node moves a control Spatial to the specified target Spatial
+##     This node moves a control Node3D to the specified target Node3D
 ##     at a requested speed.
 ## 
 
@@ -15,17 +15,17 @@ extends Node
 signal move_complete
 
 
-# Spatial to control
-var _control: Spatial
+# Node3D to control
+var _control: Node3D
 
-# Spatial representing the target
-var _target: Spatial
+# Node3D representing the target
+var _target: Node3D
 
 # Starting transform
-var _start: Transform
+var _start: Transform3D
 
 # Target offset
-var _offset: Transform
+var _offset: Transform3D
 
 # Move duration
 var _duration: float
@@ -67,7 +67,7 @@ func _process(delta: float) -> void:
 
 
 ## Start the move
-func start(var control: Spatial, var target: Spatial, var offset: Transform, var speed: float) -> void:
+func start(control: Node3D, target: Node3D, offset: Transform3D, speed: float) -> void:
 	# Save the control and target
 	_control = control
 	_target = target

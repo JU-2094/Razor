@@ -3,9 +3,9 @@
 [ext_resource path="res://mbtoolkit/templates/Entity.tscn" type="PackedScene" id=1]
 [ext_resource path="res://mbtoolkit/templates/BaseWorld.tscn" type="PackedScene" id=2]
 
-[node name="game_v2" type="Spatial"]
+[node name="game_v2" type="Node3D"]
 
 [node name="world" parent="." instance=ExtResource( 2 )]
 
 [node name="Entity" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84659, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84659, 0 )

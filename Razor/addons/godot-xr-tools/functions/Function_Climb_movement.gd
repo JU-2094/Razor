@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_ClimbMovement
 extends MovementProvider
 
@@ -8,9 +8,9 @@ extends MovementProvider
 ## @desc:
 ##     This script works with the Function_Climb_movement asset to provide
 ##     climbing movement for the player. This script works with the PlayerBody
-##     attached to the players ARVROrigin.
+##     attached to the players XROrigin3D.
 ##
-##     StaticBody objects can be marked as climbable by adding the
+##     StaticBody3D objects can be marked as climbable by adding the
 ##     Object_climbable script to them
 ##
 ##     When climbing, the global velocity of the PlayerBody is averaged for
@@ -31,22 +31,22 @@ const HORIZONTAL := Vector3(1.0, 0.0, 1.0)
 
 
 ## Movement provider order
-export var order := 15
+@export var order := 15
 
 ## Push forward when flinging
-export var forward_push := 1.0
+@export var forward_push := 1.0
 
 ## Velocity multiplier when flinging up walls
-export var fling_multiplier := 1.0
+@export var fling_multiplier := 1.0
 
 ## Averages for velocity measurement
-export var velocity_averages := 5
+@export var velocity_averages := 5
 
 ## Pickup function for the left hand
-export (NodePath) var left_pickup
+@export (NodePath) var left_pickup
 
 ## Pickup function for the right hand
-export (NodePath) var right_pickup
+@export (NodePath) var right_pickup
 
 
 # Velocity averaging fields
@@ -55,8 +55,8 @@ var _deltas = Array()
 
 
 # Node references
-onready var _left_pickup_node: Function_Pickup = get_node(left_pickup)
-onready var _right_pickup_node: Function_Pickup = get_node(right_pickup)
+@onready var _left_pickup_node: Function_Pickup = get_node(left_pickup)
+@onready var _right_pickup_node: Function_Pickup = get_node(right_pickup)
 
 
 func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
@@ -157,7 +157,7 @@ func _average_velocity() -> Vector3:
 	return total_distance / total_time
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Verify the left controller
 	var test_left_pickup_node = get_node_or_null(left_pickup) if left_pickup else null
 	if !test_left_pickup_node or !test_left_pickup_node is Function_Pickup:
@@ -173,4 +173,4 @@ func _get_configuration_warning():
 		return "Minimum of 2 velocity averages needed"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

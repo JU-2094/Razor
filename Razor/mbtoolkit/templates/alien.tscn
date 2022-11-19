@@ -2,11 +2,11 @@
 
 [ext_resource path="res://assets/models/space_ship.tscn" type="PackedScene" id=1]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape3D" id=1]
 
-[node name="alien" type="KinematicBody"]
+[node name="alien" type="CharacterBody3D"]
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( 1 )
 
 [node name="space_ship" parent="." instance=ExtResource( 1 )]

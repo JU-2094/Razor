@@ -49,7 +49,7 @@ func net_clsconn2ser_rem():
 # current instance will be the server
 func net_iniserv():
 	var rc = OK
-	net_peer = NetworkedMultiplayerENet.new()
+	net_peer = ENetMultiplayerPeer.new()
 	rc = net_peer.create_server(PORT_P2P, MAX_CLIENT)
 	ismaster = 1
 	if (rc!=OK):
@@ -65,14 +65,14 @@ func bcast2clt():
 	pass
 
 # has a client have to update peer
-remote func sync_srv2clt(data):
+@rpc(any_peer) func sync_srv2clt(data):
 	# update data by reference
 	# todo
 	pass
 
 func net_iniclnt(IP_HOST):
 	var rc = OK
-	net_peer = NetworkedMultiplayerENet.new()
+	net_peer = ENetMultiplayerPeer.new()
 	rc = net_peer.create_client(IP_HOST, PORT_P2P)
 	ismaster = 0
 	if (rc!=OK):
@@ -84,8 +84,8 @@ func net_iniclnt(IP_HOST):
 func bcast2srv():
 	rpc("sync_clt2srv", data_send)
 
-# server has to update his data depending on peer
-remote func sync_clt2srv(data):
+# server has to update his data depending checked peer
+@rpc(any_peer) func sync_clt2srv(data):
 	pass
 
 func net_close():
@@ -108,12 +108,12 @@ func srv2clt():
 	
 	# test of data_s
 	var request = "conn2srv"
-	var data_s = request.to_ascii()
+	var data_s = request.to_ascii_buffer()
 	var buffer
 	# get lock
 	print("network here")
 	if lck_srv.try_lock() == OK:
-		lck_srv.lock()
+		false # lck_srv.lock() # TODOConverter40, Image no longer requires locking, `false` helps to not break one line if/else, so it can freely be removed
 		# request data to server
 		# Todo cipher this before sending
 		print("lock aquired")
@@ -135,5 +135,5 @@ func srv2clt():
 			socket_udp.listen(PORT_CLIENT, IP_SERVER_R)
 			socket_udp.set_dest_address(IP_SERVER_R, PORT_SERVER)
 			
-		lck_srv.unlock()
+		false # lck_srv.unlock() # TODOConverter40, Image no longer requires locking, `false` helps to not break one line if/else, so it can freely be removed
 

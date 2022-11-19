@@ -1,5 +1,5 @@
-tool
-extends Spatial
+@tool
+extends Node3D
 #The algorithm works as follows:
 #1.- Create maze boundaries
 #2.- Create rooms inside boundaries
@@ -7,10 +7,10 @@ extends Spatial
 #4.- Connect rooms
 
 #Size of map #######################################
-export (int) var x_size=12
-export (int) var y_size=12
-export (int) var node_size=1
-export (int) var hall_size=1
+@export (int) var x_size=12
+@export (int) var y_size=12
+@export (int) var node_size=1
+@export (int) var hall_size=1
 
 #Important Tiles ID ################################
 var wall_tile=0
@@ -20,8 +20,8 @@ var node_tile=2
 var hall_tile=2
 #Rooms Parameters###################################
 #Make sure size of map is bigger than max_room_len or rooms would not be created
-export (int) var max_room_len=5
-export (int) var min_room_len=3
+@export (int) var max_room_len=5
+@export (int) var min_room_len=3
 
 
 
@@ -50,23 +50,23 @@ func fill_maze(tile):
 	var y=y_size*node_size + (y_size-1)*(hall_size)+1
 	for i in range(1,x):
 		for j in range(1,y):
-			$GridMap.set_cell_item(i,0,j,tile)
+			$GridMap.set_cell_item( Vector3(i,0,j) ,tile)
 	return [x,y]
 #1.2-Add frame to the maze
 func frame_maze(x,y,tile):
 	for i in range(0,x):
-		$GridMap.set_cell_item(i,0,0,tile)
-		$GridMap.set_cell_item(i,0,y,tile)
+		$GridMap.set_cell_item( Vector3(i,0,0) ,tile)
+		$GridMap.set_cell_item( Vector3(i,0,y) ,tile)
 	
 	for i in range(0,y):
-		$GridMap.set_cell_item(0,0,i,tile)
-		$GridMap.set_cell_item(x,0,i,tile)
-	$GridMap.set_cell_item(x,0,y,tile)
+		$GridMap.set_cell_item( Vector3(0,0,i) ,tile)
+		$GridMap.set_cell_item( Vector3(x,0,i) ,tile)
+	$GridMap.set_cell_item( Vector3(x,0,y) ,tile)
 
 func build_node(x,y,tile):
 	for i in range(0,node_size):
 		for j in range(0,node_size):
-			$GridMap.set_cell_item(x+i,0,y+j,tile)
+			$GridMap.set_cell_item( Vector3(x+i,0,y+j) ,tile)
 
 func show_nodes(x,y,tile=node_tile):
 	for i in range(1,x,node_size+hall_size):
@@ -99,17 +99,17 @@ func build_grid():
 				ady_list[node_id].append([Vector2(i-1,j),rng.randi_range(1,x_size*y_size)])
 	return ady_list
 #2.2 ROOMS
-#2.2.1 Fill Room
+#2.2.1 Fill Node3D
 func fill_room(x,y,x_len,y_len,tile):
 	var step=node_size+hall_size
 	var init_tile =Vector2(step*x+1,(step*y)+1)
 	var end_tile =Vector2(step*(x+x_len)-hall_size+1,step*(y+y_len)-hall_size+1)
 	for i in range(init_tile[0],end_tile[0]):
 		for j in range(init_tile[1],end_tile[1]):
-			$GridMap.set_cell_item(i,0,j,tile)
+			$GridMap.set_cell_item( Vector3(i,0,j) ,tile)
 			
 
-#2.2.2 Add Room
+#2.2.2 Add Node3D
 func add_room(x,y,x_len,y_len,ady_list,tile=room_tile):
 	#First pass check if space is available
 	var del_nodes={}

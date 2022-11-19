@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 class_name LittleBall
 
@@ -7,12 +7,12 @@ signal bullet_hit(position, body, type)
 var timerHandler: Timer
 var velocity: Vector3 = Vector3.ZERO
 var init: bool = false
-export var speed: int = 100
-export var lifetime: float = 3
+@export var speed: int = 100
+@export var lifetime: float = 3
 
 func _ready():
 	timerHandler = Timer.new()
-	timerHandler.connect("timeout", self, "lifetime_out")
+	timerHandler.connect("timeout",Callable(self,"lifetime_out"))
 	timerHandler.set_wait_time(lifetime)
 	add_child(timerHandler)
 	timerHandler.start()

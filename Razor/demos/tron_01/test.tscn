@@ -4,13 +4,13 @@
 [ext_resource path="res://mbtoolkit/features/body/MB_cam_circle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/maze/Maze3D.tscn" type="PackedScene" id=3]
 
-[node name="Spatial" type="Spatial"]
+[node name="Node3D" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.05841, 2.45, 5.2293 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.05841, 2.45, 5.2293 )
 
 [node name="CameraPivot" parent="." instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -8.74228e-08, -3.05346e-08, 0.93702, 0.349275, 8.19169e-08, 0.349275, -0.93702, 0, 6.79484, 5.34383 )
+transform = Transform3D( -1, 0, -8.74228e-08, -3.05346e-08, 0.93702, 0.349275, 8.19169e-08, 0.349275, -0.93702, 0, 6.79484, 5.34383 )
 distance = 10.0
 height_from_floor = 7.5
 target_path = NodePath("../Player")

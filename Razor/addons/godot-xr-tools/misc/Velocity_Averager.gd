@@ -28,14 +28,14 @@ var _linear_distances := Array()
 var _angular_distances := Array()
 
 # Last transform
-var _last_transform := Transform()
+var _last_transform := Transform3D()
 
 # Has last transform flag
 var _has_last_transform := false
 
 
 ## Initialize the VelocityAverager with an averaging count
-func _init(var count: int):
+func _init(count: int):
 	_count = count
 
 ## Clear the averages
@@ -46,9 +46,9 @@ func clear():
 	_has_last_transform = false
 
 ## Add linear and angular distances to the averager
-func add_distance(var delta: float, var linear_distance: Vector3, var angular_distance: Vector3):
+func add_distance(delta: float, linear_distance: Vector3, angular_distance: Vector3):
 	# Sanity check
-	assert(delta > 0, "Velocity averager requires positive time-deltas")
+	assert(delta > 0) #,"Velocity averager requires positive time-deltas")
 	
 	# Add data averaging arrays
 	_time_deltas.push_back(delta)
@@ -62,7 +62,7 @@ func add_distance(var delta: float, var linear_distance: Vector3, var angular_di
 		_angular_distances.pop_front()
 
 ## Add a transform to the averager
-func add_transform(var delta: float, var transform: Transform):
+func add_transform(delta: float, transform: Transform3D):
 	# Handle saving the first transform
 	if !_has_last_transform:
 		_last_transform = transform
@@ -118,7 +118,7 @@ func angular_velocity() -> Vector3:
 	# than a euler-angle. The difference is that physics engines process euler 
 	# velocities by converting them to axis-angle form by:
 	# - Angle-velocity: euler-velocity vector magnitude
-	# - Axis: euler-velocity normalized and axis evaluated on 1-radian rotation
+	# - Axis: euler-velocity normalized and axis evaluated checked 1-radian rotation
 	#
 	# The result of this interpretation is that scaling the euler-velocity
 	# by arbitrary amounts only results in the angle-velocity changing without

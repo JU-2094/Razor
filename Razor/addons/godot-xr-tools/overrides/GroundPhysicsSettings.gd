@@ -1,4 +1,4 @@
-tool
+@tool
 class_name GroundPhysicsSettings
 extends Resource
 
@@ -12,25 +12,25 @@ enum GroundPhysicsFlags {
 }
 
 ## Flags defining which ground velocities are enabled
-export (int, FLAGS, "Move Drag", "Move Traction", "Move Max Slope", "Jump Max Slope", "Jump Velocity") var flags := 0
+@export (int, FLAGS, "Move Drag", "Move Traction", "Move Max Slope", "Jump Max Slope", "Jump Velocity") var flags := 0
 
 ## Movement drag factor
-export var move_drag := 5.0
+@export var move_drag := 5.0
 
 ## Movement traction factor
-export var move_traction := 30.0
+@export var move_traction := 30.0
 
-## Stop sliding on slope
-export var stop_on_slope := true
+## Stop sliding checked slope
+@export var stop_on_slope := true
 
 ## Movement maximum slope
-export (float, 0.0, 85.0) var move_max_slope := 45.0
+@export (float, 0.0, 85.0) var move_max_slope := 45.0
 
 ## Jump maximum slope
-export (float, 0.0, 85.0) var jump_max_slope := 45.0
+@export (float, 0.0, 85.0) var jump_max_slope := 45.0
 
 ## Jump velocity
-export var jump_velocity := 3.0
+@export var jump_velocity := 3.0
 
 # Handle class initialization with default parameters
 func _init(

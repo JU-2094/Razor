@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_DirectMovement
 extends MovementProvider
 
@@ -8,7 +8,7 @@ extends MovementProvider
 ## @desc:
 ##     This script works with the Function_Direct_movement asset to provide
 ##     direct movement for the player. This script works with the PlayerBody
-##     attached to the players ARVROrigin.
+##     attached to the players XROrigin3D.
 ##
 ##     The following types of direct movement are supported:
 ##      - Slewing
@@ -20,17 +20,17 @@ extends MovementProvider
 
 
 ## Movement provider order
-export var order := 10
+@export var order := 10
 
 ## Movement speed
-export var max_speed := 10.0
+@export var max_speed := 10.0
 
 ## Enable player strafing
-export var strafe := false
+@export var strafe := false
 
 
 # Controller node
-onready var _controller : ARVRController = get_parent()
+@onready var _controller : XRController3D = get_parent()
 
 
 # Perform jump movement
@@ -52,11 +52,11 @@ func physics_movement(delta: float, player_body: PlayerBody, _disabled: bool):
 
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
+	if !test_controller or !test_controller is XRController3D:
 		return "Unable to find ARVR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

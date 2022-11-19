@@ -1,8 +1,8 @@
-tool
+@tool
 extends OptionButton
 
 var available_runtimes : Array = Array()
-onready var platform = OS.get_name()
+@onready var platform = OS.get_name()
 
 var home_folder = ''
 
@@ -14,9 +14,9 @@ func _parse_path(p_path):
 func _update_tooltip():
 	if selected > 0:
 		var i = get_item_id(selected)
-		hint_tooltip = _parse_path(available_runtimes[i]["path"])
+		tooltip_text = _parse_path(available_runtimes[i]["path"])
 	else:
-		hint_tooltip = "Select the OpenXR runtime test your project with"
+		tooltip_text = "Select the OpenXR runtime test your project with"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,7 +30,9 @@ func _ready():
 	# read our json file, may have entries for multiple platforms, we'll filter them later
 	var f = File.new()
 	if (f.open("res://addons/godot-openxr/runtimes.json", File.READ)) == OK:
-		var json = JSON.parse(f.get_as_text())
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(f.get_as_text())
+		var json = test_json_conv.get_data()
 		available_runtimes = json.result as Array
 		f.close()
 
@@ -59,7 +61,7 @@ func _ready():
 
 		visible = true
 	else:
-		# I guess nothing supported on this platform
+		# I guess nothing supported checked this platform
 		visible = false
 
 func _on_OpenXRRunSelect_item_selected(index):

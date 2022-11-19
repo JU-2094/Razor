@@ -1,5 +1,5 @@
-tool
-extends ARVROrigin
+@tool
+extends XROrigin3D
 
 signal initialised
 signal failed_initialisation
@@ -15,22 +15,34 @@ signal focused_state
 signal visible_state
 signal pose_recentered
 
-export var auto_initialise = true setget set_auto_initialise
-export var enable_passthrough = false setget set_enable_passthrough
-export (NodePath) var viewport setget set_viewport
-export var near_z = 0.1
-export var far_z = 1000.0
+@export var auto_initialise = true :
+	get:
+		return auto_initialise # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_auto_initialise
+@export var enable_passthrough = false :
+	get:
+		return enable_passthrough # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_enable_passthrough
+@export (NodePath) var viewport :
+	get:
+		return viewport # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_viewport
+@export var near_z = 0.1
+@export var far_z = 1000.0
 
-var interface : ARVRInterface
+var interface : XRInterface
 var enabled_extensions : Array
 
 func set_auto_initialise(p_new_value):
 	auto_initialise = p_new_value
-	update_configuration_warning()
+	update_configuration_warnings()
 
 func set_enable_passthrough(p_new_value):
 	enable_passthrough = p_new_value
-	update_configuration_warning()
+	update_configuration_warnings()
 
 	# Only actually start our passthrough if our interface has been instanced
 	# if not this will be delayed until initialise is successfully called.
@@ -43,14 +55,14 @@ func set_enable_passthrough(p_new_value):
 
 func set_viewport(p_new_value):
 	viewport = p_new_value
-	update_configuration_warning()
+	update_configuration_warnings()
 
-func get_interface() -> ARVRInterface:
+func get_interface() -> XRInterface:
 	return interface
 
 func _ready():
-	$ARVRCamera.near = near_z
-	$ARVRCamera.far = far_z
+	$XRCamera3D.near = near_z
+	$XRCamera3D.far = far_z
 
 	if auto_initialise && !Engine.editor_hint:
 		initialise()
@@ -64,12 +76,12 @@ func initialise() -> bool:
 		# we are already initialised
 		return true
 
-	interface = ARVRServer.find_interface("OpenXR")
+	interface = XRServer.find_interface("OpenXR")
 	if interface and interface.initialize():
 		print("OpenXR Interface initialized")
 
 		# Find the viewport we're using to render our XR output
-		var vp : Viewport = _get_xr_viewport()
+		var vp : SubViewport = _get_xr_viewport()
 
 		# Obtain enabled extensions
 		enabled_extensions = $Configuration.get_enabled_extensions()
@@ -93,12 +105,12 @@ func initialise() -> bool:
 			print("No refresh rate given by XR runtime")
 
 			# Use something sufficiently high
-			Engine.iterations_per_second = 144
+			Engine.physics_ticks_per_second = 144
 		else:
 			print("HMD refresh rate is set to " + str(refresh_rate))
 
 			# Match our physics to our HMD
-			Engine.iterations_per_second = refresh_rate
+			Engine.physics_ticks_per_second = refresh_rate
 
 		emit_signal("initialised")
 		return true
@@ -108,9 +120,9 @@ func initialise() -> bool:
 		emit_signal("failed_initialisation")
 		return false
 
-func _get_xr_viewport() -> Viewport:
+func _get_xr_viewport() -> SubViewport:
 	if viewport:
-		var vp : Viewport = get_node(viewport)
+		var vp : SubViewport = get_node(viewport)
 		return vp
 	else:
 		return get_viewport()
@@ -133,21 +145,21 @@ func _stop_passthrough():
 	$Configuration.stop_passthrough()
 
 func _connect_plugin_signals():
-	ARVRServer.connect("openxr_session_begun", self, "_on_openxr_session_begun")
-	ARVRServer.connect("openxr_session_ending", self, "_on_openxr_session_ending")
-	ARVRServer.connect("openxr_session_idle", self, "_on_openxr_session_idle")
-	ARVRServer.connect("openxr_session_synchronized", self, "_on_openxr_session_synchronized")
-	ARVRServer.connect("openxr_session_loss_pending", self, "_on_openxr_session_loss_pending")
-	ARVRServer.connect("openxr_session_exiting", self, "_on_openxr_session_exiting")
-	ARVRServer.connect("openxr_focused_state", self, "_on_openxr_focused_state")
-	ARVRServer.connect("openxr_visible_state", self, "_on_openxr_visible_state")
-	ARVRServer.connect("openxr_pose_recentered", self, "_on_openxr_pose_recentered")
+	XRServer.connect("openxr_session_begun",Callable(self,"_on_openxr_session_begun"))
+	XRServer.connect("openxr_session_ending",Callable(self,"_on_openxr_session_ending"))
+	XRServer.connect("openxr_session_idle",Callable(self,"_on_openxr_session_idle"))
+	XRServer.connect("openxr_session_synchronized",Callable(self,"_on_openxr_session_synchronized"))
+	XRServer.connect("openxr_session_loss_pending",Callable(self,"_on_openxr_session_loss_pending"))
+	XRServer.connect("openxr_session_exiting",Callable(self,"_on_openxr_session_exiting"))
+	XRServer.connect("openxr_focused_state",Callable(self,"_on_openxr_focused_state"))
+	XRServer.connect("openxr_visible_state",Callable(self,"_on_openxr_visible_state"))
+	XRServer.connect("openxr_pose_recentered",Callable(self,"_on_openxr_pose_recentered"))
 
 func _on_openxr_session_begun():
-	# This is called on session ready.
+	# This is called checked session ready.
 	print("OpenXR session begun")
 
-	var vp : Viewport = _get_xr_viewport()
+	var vp : SubViewport = _get_xr_viewport()
 	if vp:
 		# Our interface will tell us whether we should keep our render buffer in linear color space
 		vp.keep_3d_linear = $Configuration.keep_3d_linear()
@@ -155,7 +167,7 @@ func _on_openxr_session_begun():
 	emit_signal("session_begun")
 
 func _on_openxr_session_ending():
-	# This is called on session stopping
+	# This is called checked session stopping
 
 	print("OpenXR session ending")
 	emit_signal("session_ending")
@@ -188,17 +200,17 @@ func _on_openxr_pose_recentered():
 	print("OpenXR pose recentered")
 	emit_signal("pose_recentered")
 
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	var version = Engine.get_version_info()
 
 	if viewport:
 		var vp = get_node(viewport)
 		if !vp:
 			return "Can't access assigned viewport"
-		if !(vp is Viewport):
+		if !(vp is SubViewport):
 			return "Selected viewport is not a viewport"
-		if vp.render_target_update_mode != Viewport.UPDATE_ALWAYS:
-			return "Viewport update mode is not set to always, you may not get proper output"
+		if vp.render_target_update_mode != SubViewport.UPDATE_ALWAYS:
+			return "SubViewport update mode is not set to always, you may not get proper output"
 
 	if enable_passthrough and version['major'] == 3 and version['minor'] < 4:
 		return "Godot %s is too old for the passthrough version. Please upgrade to Godot 3.4 or later." % version['string']

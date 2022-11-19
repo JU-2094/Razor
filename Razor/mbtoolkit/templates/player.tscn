@@ -1,9 +1,9 @@
 [gd_scene format=2]
 
-[node name="Entity" type="Spatial"]
+[node name="Entity" type="Node3D"]
 
-[node name="Body" type="Spatial" parent="."]
+[node name="Body" type="Node3D" parent="."]
 
-[node name="Objects" type="Spatial" parent="."]
+[node name="Objects" type="Node3D" parent="."]
 
-[node name="Controllers" type="Spatial" parent="."]
+[node name="Controllers" type="Node3D" parent="."]

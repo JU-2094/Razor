@@ -6,10 +6,10 @@ extends Node2D
 #4.- Connect rooms
 
 #Size of map #######################################
-export (int) var x_size=12
-export (int) var y_size=12
-export (int) var node_size=1
-export (int) var hall_size=1
+@export (int) var x_size=12
+@export (int) var y_size=12
+@export (int) var node_size=1
+@export (int) var hall_size=1
 
 #Important Tiles ID ################################
 var wall_tile=5
@@ -19,8 +19,8 @@ var node_tile=10
 var hall_tile=7
 #Rooms Parameters###################################
 #Make sure size of map is bigger than max_room_len or rooms would not be created
-export (int) var max_room_len=5
-export (int) var min_room_len=3
+@export (int) var max_room_len=5
+@export (int) var min_room_len=3
 
 
 
@@ -99,7 +99,7 @@ func build_grid():
 				ady_list[node_id].append([Vector2(i-1,j),rng.randi_range(1,x_size*y_size)])
 	return ady_list
 #2.2 ROOMS
-#2.2.1 Fill Room
+#2.2.1 Fill Node3D
 func fill_room(x,y,x_len,y_len,tile):
 	var step=node_size+hall_size
 	var init_tile =Vector2(step*x+1,(step*y)+1)
@@ -109,7 +109,7 @@ func fill_room(x,y,x_len,y_len,tile):
 			$TileMap.set_cell(i,j,tile)
 			
 
-#2.2.2 Add Room
+#2.2.2 Add Node3D
 func add_room(x,y,x_len,y_len,ady_list,tile=room_tile):
 	#First pass check if space is available
 	var del_nodes={}

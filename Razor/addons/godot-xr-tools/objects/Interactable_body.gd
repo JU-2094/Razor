@@ -1,4 +1,4 @@
-extends PhysicsBody
+extends PhysicsBody3D
 
 class_name XRToolsInteractableBody
 

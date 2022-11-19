@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_Grapple
 extends MovementProvider
 
@@ -9,7 +9,7 @@ extends MovementProvider
 ## @desc:
 ##     This script provide simple grapple based movement - "bat hook" style where the player moves 
 ##     directly to the grapple location. This script works with the PlayerBody attached to the
-##     players ARVROrigin.
+##     players XROrigin3D.
 ##
 ##     The player may have multiple movement nodes attached to different
 ##     controllers to provide different types of movement.
@@ -53,32 +53,36 @@ enum GrappleState {
 
 
 ## Movement provider order
-export var order := 20
+@export var order := 20
 
 ## Grapple length - use to adjust maximum distance for possible grapple hooking.
-export var grapple_length := 15.0
+@export var grapple_length := 15.0
 
 ## Grapple collision mask
-export (int, LAYERS_3D_PHYSICS) var grapple_collision_mask = 1 setget _set_grapple_collision_mask
+@export (int, LAYERS_3D_PHYSICS) var grapple_collision_mask = 1 :
+	get:
+		return grapple_collision_mask # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of _set_grapple_collision_mask
 
-## Impulse speed applied to the player on first grapple
-export var impulse_speed := 10.0
+## Impulse speed applied to the player checked first grapple
+@export var impulse_speed := 10.0
 
 ## Winch speed applied to the player while the grapple is held
-export var winch_speed := 2.0
+@export var winch_speed := 2.0
 
 ##Probably need to add export variables for line size, maybe line material at some point so dev does not need to make children editable to do this
-##For now, right click on grapple node and make children editable to edit these facets.
-export var rope_width := 0.02
+##For now, right click checked grapple node and make children editable to edit these facets.
+@export var rope_width := 0.02
 
 ## Air friction while grappling
-export var friction := 0.1
+@export var friction := 0.1
 
 ## Grapple button (triggers grappling movement).  Be sure this button does not conflict with other functions.
-export (Buttons) var grapple_button_id : int = Buttons.VR_TRIGGER
+@export (Buttons) var grapple_button_id : int = Buttons.VR_TRIGGER
 
 # Hook related variables
-var hook_object : Spatial = null
+var hook_object : Node3D = null
 var hook_local := Vector3(0,0,0)
 var hook_point := Vector3(0,0,0)
 
@@ -86,18 +90,18 @@ var hook_point := Vector3(0,0,0)
 var _grapple_button := false
 
 # Get line creation nodes
-onready var _line_helper : Spatial = $LineHelper
-onready var _line : CSGCylinder = $LineHelper/Line
+@onready var _line_helper : Node3D = $LineHelper
+@onready var _line : CSGCylinder3D = $LineHelper/Line
 
 # Get Controller node - consider way to universalize this if user wanted to attach this
 # to a gun instead of player's hand.  Could consider variable to select controller instead.
-onready var _controller : ARVRController = get_parent()
+@onready var _controller : XRController3D = get_parent()
 
 # Get Raycast node
-onready var _grapple_raycast : RayCast = $Grapple_RayCast
+@onready var _grapple_raycast : RayCast3D = $Grapple_RayCast
 
 # Get Grapple Target Node 
-onready var _grapple_target : Spatial = $Grapple_Target
+@onready var _grapple_target : Node3D = $Grapple_Target
 
 
 # Function run when node is added to scene
@@ -107,12 +111,12 @@ func _ready():
 		return
 
 	# Ensure grapple length is valid
-	var min_hook_length := 1.5 * ARVRServer.world_scale
+	var min_hook_length := 1.5 * XRServer.world_scale
 	if grapple_length < min_hook_length:
 		grapple_length = min_hook_length
 
 	# Set ray-cast
-	_grapple_raycast.cast_to = Vector3(0, 0, -grapple_length) * ARVRServer.world_scale #Is WS necessary here?
+	_grapple_raycast.cast_to = Vector3(0, 0, -grapple_length) * XRServer.world_scale #Is WS necessary here?
 	_grapple_raycast.collision_mask = grapple_collision_mask
 
 	# Deal with line
@@ -131,7 +135,7 @@ func _process(_delta: float):
 		var line_length := (hook_point - _controller.global_transform.origin).length()
 		_line_helper.look_at(hook_point, Vector3.UP)
 		_line.height = line_length
-		_line.translation.z = line_length / -2
+		_line.position.z = line_length / -2
 		_line.visible = true
 	else:
 		_line.visible = false
@@ -163,7 +167,7 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 	elif _grapple_button and !old_grapple_button and _grapple_raycast.is_colliding():
 		hook_object = _grapple_raycast.get_collider()
 		hook_point = _grapple_raycast.get_collision_point()
-		hook_local = hook_object.global_transform.xform_inv(hook_point)
+		hook_local = hook_point * hook_object.global_transform
 		do_impulse = true
 		_set_grappling(true)
 
@@ -172,7 +176,7 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 		return
 
 	# Get hook direction
-	hook_point = hook_object.global_transform.xform(hook_local)
+	hook_point = hook_object.global_transform * hook_local
 	var hook_vector := hook_point - _controller.global_transform.origin
 	var hook_length := hook_vector.length()
 	var hook_direction := hook_vector / hook_length
@@ -194,19 +198,21 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 	player_body.velocity *= 1.0 - friction * delta
 
 	# Perform exclusive movement as we have dealt with gravity
-	player_body.velocity = player_body.move_and_slide(player_body.velocity)
+	player_body.set_velocity(player_body.velocity)
+	player_body.move_and_slide()
+	player_body.velocity = player_body.velocity
 	return true
 
 
 # Called when the grapple collision mask has been modified
-func _set_grapple_collision_mask(var new_value: int) -> void:
+func _set_grapple_collision_mask(new_value: int) -> void:
 	grapple_collision_mask = new_value
 	if is_inside_tree() and _grapple_raycast:
 		_grapple_raycast.collision_mask = new_value
 
 
 # Set the grappling state and fire any signals
-func _set_grappling(var active: bool) -> void:
+func _set_grappling(active: bool) -> void:
 	# Skip if no change
 	if active == is_active:
 		return
@@ -222,11 +228,11 @@ func _set_grappling(var active: bool) -> void:
 
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
+	if !test_controller or !test_controller is XRController3D:
 		return "Unable to find ARVR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

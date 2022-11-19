@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_FallDamage
 extends MovementProvider
 
@@ -26,7 +26,7 @@ extends MovementProvider
 ##     9.81 meters per second.
 ##
 ##     This file can handle simple demonstrations, but games will most likely
-##     want to modify it, for example to ignore damage on certain surfaces.
+##     want to modify it, for example to ignore damage checked certain surfaces.
 ##
 
 
@@ -35,16 +35,16 @@ signal player_fall_damage(damage)
 
 
 ## Movement provider order
-export var order := 1000
+@export var order := 1000
 
 ## Ignore damage if player is launched up
-export var ignore_launch := true
+@export var ignore_launch := true
 
-## Only take damage on ground
-export var ground_only := false
+## Only take damage checked ground
+@export var ground_only := false
 
 ## Acceleration limit
-export var damage_threshold := 8.0
+@export var damage_threshold := 8.0
 
 
 # Previous velocity
@@ -73,7 +73,7 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 
 	# Handle ground-only collisions
 	if ground_only:
-		# Ignore if not on ground
+		# Ignore if not checked ground
 		if not player_body.on_ground:
 			return
 

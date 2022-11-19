@@ -1,9 +1,9 @@
-extends ARVRController
+extends XRController3D
 
 signal activated
 signal deactivated
 
-export var hide_for_no_tracking_confidence = false
+@export var hide_for_no_tracking_confidence = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

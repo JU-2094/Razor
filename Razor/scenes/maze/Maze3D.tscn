@@ -3,7 +3,7 @@
 [ext_resource path="res://scripts/godot/Maze3D.gd" type="Script" id=1]
 [ext_resource path="res://assets/libs/maze.tres" type="MeshLibrary" id=2]
 
-[node name="Maze3D" type="Spatial"]
+[node name="Maze3D" type="Node3D"]
 script = ExtResource( 1 )
 x_size = 16
 y_size = 16

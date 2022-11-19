@@ -1,4 +1,4 @@
-tool
+@tool
 class_name GroundPhysics
 extends Node
 
@@ -8,19 +8,19 @@ extends Node
 ##
 ## @desc:
 ##     This script works with the GroundPhysics asset override the default
-##     ground physics settings of the player when they are standing on a
+##     ground physics settings of the player when they are standing checked a
 ##     specific type of ground.
 ##
 ##     In order to override the ground physics properties, the user must add a
-##     GroundPhysics node to the object the player would stand on, then
+##     GroundPhysics node to the object the player would stand checked, then
 ##     enable the appropriate flags and provide new values.
 ##
 
 ## GroundPhysicsSettings to apply - can only be typed in Godot 4+
-export (Resource) var physics
+@export (Resource) var physics
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Verify physics specified
 	if !physics:
 		return "Physics must be specified"

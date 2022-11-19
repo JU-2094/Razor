@@ -24,13 +24,13 @@ var _mode: int = KEYBOARD_MODE.LOWER_CASE
 # Handle key pressed from VirtualKey
 func on_key_pressed(scan_code_text: String, unicode: int, shift: bool):
 	# Find the scan code
-	var scan_code := OS.find_scancode_from_string(scan_code_text)
+	var scan_code := OS.find_keycode_from_string(scan_code_text)
 
 	# Create the InputEventKey
 	var input := InputEventKey.new()
-	input.physical_scancode = scan_code
+	input.physical_keycode = scan_code
 	input.unicode = unicode if unicode else scan_code
-	input.pressed = true
+	input.button_pressed = true
 	input.scancode = scan_code
 	input.shift = shift
 

@@ -1,12 +1,12 @@
 extends Node2D
-export var speed: float = 30
-export var fall_acceleration: float = 75
+@export var speed: float = 30
+@export var fall_acceleration: float = 75
 
 var forward_camera = Vector2.ZERO
 var forward_player = Vector2(0,1)
 var lastDirection: Vector2 = Vector2.ZERO
 var velocity: Vector3 = Vector3.ZERO
-var body: KinematicBody
+var body: CharacterBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,17 +32,17 @@ func ft_process(delta):
 		
 		# Rotate direction with respect to forward camera
 		var dot_product = forward_player.dot(forward_camera)
-		var degrees = rad2deg(acos(dot_product))
+		var degrees = rad_to_deg(acos(dot_product))
 		var angle = degrees * -1 if forward_camera.x >= 0 else degrees
 		
 		# TODO: to optimize we need to set the new local system of this node somehow
 		# so we reduce rotations 
-		direction = direction.rotated(deg2rad(angle))
+		direction = direction.rotated(deg_to_rad(angle))
 		
 		# Rotate body to respect to where will walk
 		lastDirection = direction
 		dot_product = direction.dot(Vector2(0,1))
-		degrees = rad2deg(acos(dot_product))
+		degrees = rad_to_deg(acos(dot_product))
 		angle = degrees if direction.x >= 0 else degrees * -1
 		# dot product 1 - 0 degrees, -1 - 180 degrees
 		# x is the orientation
@@ -53,7 +53,10 @@ func ft_process(delta):
 	velocity.y -= fall_acceleration * delta
 	
 	# Apply movement to player object
-	velocity = body.move_and_slide(velocity, Vector3.UP)
+	body.set_velocity(velocity)
+	body.set_up_direction(Vector3.UP)
+	body.move_and_slide()
+	velocity = body.velocity
 
 
 func _on_Player_camera_info(camera_translation):

@@ -4,18 +4,18 @@
 [ext_resource path="res://mbtoolkit/features/body/MB_mv_directional.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mbtoolkit/templates/alien.tscn" type="PackedScene" id=3]
 
-[node name="Entity" type="Spatial"]
+[node name="Entity" type="Node3D"]
 
 [node name="Body" parent="." instance=ExtResource( 3 )]
 
 [node name="shooter" parent="Body" instance=ExtResource( 1 )]
-instance_position = NodePath("../Position3D")
+instance_position = NodePath("../Marker3D")
 
 [node name="movement" parent="Body" instance=ExtResource( 2 )]
 
-[node name="Position3D" type="Position3D" parent="Body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.21293 )
+[node name="Marker3D" type="Marker3D" parent="Body"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.21293 )
 
-[node name="Controllers" type="Spatial" parent="."]
+[node name="Controllers" type="Node3D" parent="."]
 
-[node name="Objects" type="Spatial" parent="."]
+[node name="Objects" type="Node3D" parent="."]

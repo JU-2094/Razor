@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_Glide
 extends MovementProvider
 
@@ -8,7 +8,7 @@ extends MovementProvider
 ## @desc:
 ##     This script works with the Function_Glide_movement asset to provide glide
 ##     mechanics for the player. This script works with the PlayerBody attached
-##     to the players ARVROrigin.
+##     to the players XROrigin3D.
 ##
 ##     The player enables flying by moving the controllers apart further than
 ##     'glide_detect_distance'.
@@ -33,39 +33,39 @@ const HORIZONTAL := Vector3(1.0, 0.0, 1.0)
 
 
 ## Movement provider order
-export var order := 35
+@export var order := 35
 
 ## Controller separation distance to register as glide
-export var glide_detect_distance := 1.0
+@export var glide_detect_distance := 1.0
 
 ## Minimum falling speed to be considered gliding
-export var glide_min_fall_speed = -1.5
+@export var glide_min_fall_speed = -1.5
 
 ## Glide falling speed
-export var glide_fall_speed := -2.0
+@export var glide_fall_speed := -2.0
 
 ## Glide forward speed
-export var glide_forward_speed := 12.0
+@export var glide_forward_speed := 12.0
 
 ## Slew rate to transition to gliding
-export var horizontal_slew_rate := 1.0
+@export var horizontal_slew_rate := 1.0
 
 ## Slew rate to transition to gliding
-export var vertical_slew_rate := 2.0
+@export var vertical_slew_rate := 2.0
 
 
 # Node references
-onready var _left_controller := ARVRHelpers.get_left_controller(self)
-onready var _right_controller := ARVRHelpers.get_right_controller(self)
+@onready var _left_controller := ARVRHelpers.get_left_controller(self)
+@onready var _right_controller := ARVRHelpers.get_right_controller(self)
 
 
 func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
-	# Skip if disabled or either controller is off
+	# Skip if disabled or either controller is unchecked
 	if disabled or !enabled or !_left_controller.get_is_active() or !_right_controller.get_is_active():
 		_set_gliding(false)
 		return
 
-	# If on the ground, or not falling, then not gliding
+	# If checked the ground, or not falling, then not gliding
 	if player_body.on_ground || player_body.velocity.y >= glide_min_fall_speed:
 		_set_gliding(false)
 		return
@@ -75,8 +75,8 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 	var right_position := _right_controller.global_transform.origin
 	var left_to_right := (right_position - left_position) * HORIZONTAL
 
-	# Set gliding based on hand separation
-	var separation := left_to_right.length() / ARVRServer.world_scale
+	# Set gliding based checked hand separation
+	var separation := left_to_right.length() / XRServer.world_scale
 	_set_gliding(separation >= glide_detect_distance)
 
 	# Skip if not gliding
@@ -95,7 +95,9 @@ func physics_movement(delta: float, player_body: PlayerBody, disabled: bool):
 
 	# Perform the glide
 	var glide_velocity := horizontal_velocity + vertical_velocity * Vector3.UP
-	player_body.velocity = player_body.move_and_slide(glide_velocity)
+	player_body.set_velocity(glide_velocity)
+	player_body.move_and_slide()
+	player_body.velocity = player_body.velocity
 
 	# Report exclusive motion performed (to bypass gravity)
 	return true
@@ -116,7 +118,7 @@ func _set_gliding(active: bool) -> void:
 		emit_signal("player_glide_end")
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Verify the left controller
 	var test_left_controller_node = ARVRHelpers.get_left_controller(self)
 	if !test_left_controller_node:
@@ -136,4 +138,4 @@ func _get_configuration_warning():
 		return "Glide fall speed must be faster than minimum fall speed"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

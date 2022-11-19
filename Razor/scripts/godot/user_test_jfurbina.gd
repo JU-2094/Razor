@@ -8,8 +8,8 @@ var arr1 = [1,2]
 var arr2 = ['s1', 's2']
 var mth
 # Called when the node enters the scene tree for the first time.
-onready var bgproc = preload("res://client/bgproc/bgproc.gd").new()
-onready var network = preload("res://client/network/network.gd").new()
+@onready var bgproc = preload("res://client/bgproc/bgproc.gd").new()
+@onready var network = preload("res://client/network/network.gd").new()
 
 func local_test(vars):
 	print("local_test function")

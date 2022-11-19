@@ -6,7 +6,7 @@ extends CanvasLayer
 var jewels
 var bullets 
 var health_number
-var health_bar : TextureProgress
+var health_bar : TextureProgressBar
 var coins 
 var lives
 

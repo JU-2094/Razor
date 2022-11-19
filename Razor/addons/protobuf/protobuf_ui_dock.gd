@@ -29,7 +29,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-tool
+@tool
 extends VBoxContainer
 
 var Parser = preload("res://addons/protobuf/parser.gd")
@@ -100,7 +100,7 @@ func _on_CompileButton_pressed():
 
 func _exstract_dir(file_path):
 	var parts = file_path.split("/", false)
-	parts.remove(parts.size() - 1)
+	parts.remove_at(parts.size() - 1)
 	var path
 	if file_path.begins_with("/"):
 		path = "/"

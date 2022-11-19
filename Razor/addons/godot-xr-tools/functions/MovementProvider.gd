@@ -1,4 +1,4 @@
-tool
+@tool
 class_name MovementProvider
 extends Node
 
@@ -16,14 +16,14 @@ extends Node
 ##
 
 ## Enable movement provider
-export var enabled := true
+@export var enabled := true
 
 
 # Is the movement provider actively performing a move
 var is_active := false
 
 
-# Get our player body, this should be a node on our ARVROrigin node.
+# Get our player body, this should be a node checked our XROrigin3D node.
 func get_player_body() -> PlayerBody:
 	# get our origin node
 	var arvr_origin := ARVRHelpers.get_arvr_origin(self)
@@ -53,7 +53,7 @@ func _create_player_body_node():
 	if !player_body:
 		# create our player body node and add it into our tree
 		player_body = preload("res://addons/godot-xr-tools/assets/PlayerBody.tscn")
-		player_body = player_body.instance()
+		player_body = player_body.instantiate()
 		player_body.set_name("PlayerBody")
 		arvr_origin.add_child(player_body)
 		player_body.set_owner(get_tree().get_edited_scene_root())
@@ -73,15 +73,15 @@ func physics_movement(_delta: float, _player_body: PlayerBody, _disabled: bool):
 	pass
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
-	# Verify we're within the tree of an ARVROrigin node
+func _get_configuration_warnings():
+	# Verify we're within the tree of an XROrigin3D node
 	var arvr_origin = ARVRHelpers.get_arvr_origin(self)
 	if !arvr_origin:
-		return "This node must be within a branch on an ARVROrigin node"
+		return "This node must be within a branch checked an XROrigin3D node"
 
 	var player_body = get_player_body()
 	if !player_body:
-		return "Missing player body node on the ARVROrigin"
+		return "Missing player body node checked the XROrigin3D"
 
 	# Verify movement provider is in the correct group
 	if !is_in_group("movement_providers"):

@@ -29,12 +29,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-tool
+@tool
 extends Node
 
 class Document:
 	
-	func _init(doc_name : String, doc_text : String):
+	func _init(doc_name : String,doc_text : String):
 		name = doc_name
 		text = doc_text
 	
@@ -42,7 +42,7 @@ class Document:
 	var text : String
 
 class TokenPosition:
-	func _init(b : int, e : int):
+	func _init(b : int,e : int):
 		begin = b
 		end = e
 	var begin : int = 0
@@ -51,7 +51,7 @@ class TokenPosition:
 class Helper:
 
 	class StringPosition:
-		func _init(s : int, c : int, l : int):
+		func _init(s : int,c : int,l : int):
 			str_num = s
 			column = c
 			length = l
@@ -114,7 +114,7 @@ class AnalyzeResult:
 
 class Analysis:
 	
-	func _init(path : String, doc : Document):
+	func _init(path : String,doc : Document):
 		path_dir = path
 		document = doc
 	
@@ -194,7 +194,7 @@ class Analysis:
 	const TOKEN_SECOND_FIELD_OPTION : String = "^packed$"
 	
 	class TokenEntrance:
-		func _init(i : int, b : int, e : int, t : String):
+		func _init(i : int,b : int,e : int,t : String):
 			position = TokenPosition.new(b, e)
 			text = t
 			id = i
@@ -212,7 +212,7 @@ class Analysis:
 	}
 	
 	class TokenRange:
-		func _init(b : int, e : int, s):
+		func _init(b : int,e : int,s):
 			position = TokenPosition.new(b, e)
 			state = s
 		var position : TokenPosition
@@ -227,7 +227,7 @@ class Analysis:
 		var _ignore : bool
 		var _clarification : String
 		
-		func _init(id : int, clarification : String, regex_str : String, ignore = false):
+		func _init(id : int,clarification : String,regex_str : String,ignore = false):
 			_id = id
 			_regex = RegEx.new()
 			_regex.compile(regex_str)
@@ -242,7 +242,7 @@ class Analysis:
 			if match_result != null:
 				var capture
 				capture = match_result.get_string(0)
-				if capture.empty():
+				if capture.is_empty():
 					return null
 				_entrance = TokenEntrance.new(_id, match_result.get_start(0), capture.length() - 1 + match_result.get_start(0), capture)
 			return _entrance
@@ -268,7 +268,7 @@ class Analysis:
 		
 		func remove_entrance(index) -> void:
 			if index < _entrances.size():
-				_entrances.remove(index)
+				_entrances.remove_at(index)
 		
 		func get_index() -> int:
 			return _entrance_index
@@ -536,7 +536,7 @@ class Analysis:
 			else:
 				space_index = -1
 		for i in range(remove_indexes.size()):
-			tokens.remove(remove_indexes[i] - i)
+			tokens.remove_at(remove_indexes[i] - i)
 	
 	#Analysis rule
 	enum AR {
@@ -559,7 +559,7 @@ class Analysis:
 
 	#Analysis Syntax Description
 	class ASD:
-		func _init(t, s : int = SP.MAYBE, r : int = AR.MUST_ONE, i : bool = false):
+		func _init(t,s : int = SP.MAYBE,r : int = AR.MUST_ONE,i : bool = false):
 			token = t
 			space = s
 			rule = r
@@ -702,7 +702,7 @@ class Analysis:
 	}
 
 	class TokenCompare:
-		func _init(s : int, i : int, d : String = ""):
+		func _init(s : int,i : int,d : String = ""):
 			state = s
 			index = i
 			description = d
@@ -724,7 +724,7 @@ class Analysis:
 		return 0
 	
 	class IndexedToken:
-		func _init(t : TokenEntrance, i : int):
+		func _init(t : TokenEntrance,i : int):
 			token = t
 			index = i
 		var token : TokenEntrance
@@ -735,7 +735,7 @@ class Analysis:
 			importance.append(IndexedToken.new(token, index))
 	
 	class CompareSettings:
-		func _init(ci : int, n : int, pi : int, pn : String = ""):
+		func _init(ci : int,n : int,pi : int,pn : String = ""):
 			construction_index = ci
 			nesting = n
 			parent_index = pi
@@ -899,7 +899,7 @@ class Analysis:
 	]
 	
 	class Construction:
-		func _init(b : int, e : int, d : int):
+		func _init(b : int,e : int,d : int):
 			begin_token_index = b
 			end_token_index = e
 			description = d
@@ -1040,7 +1040,7 @@ class Analysis:
 	}
 	
 	class ASTClass:
-		func _init(n : String, t : int, p : int, pn : String, o : String, ci : int):
+		func _init(n : String,t : int,p : int,pn : String,o : String,ci : int):
 			name = n
 			type = t
 			parent_index = p
@@ -1064,7 +1064,7 @@ class Analysis:
 			return res
 	
 	class ASTEnumValue:
-		func _init(n : String, v : String):
+		func _init(n : String,v : String):
 			name = n
 			value = v
 		
@@ -1075,7 +1075,7 @@ class Analysis:
 			return ASTEnumValue.new(name, value)
 	
 	class ASTField:
-		func _init(t, n : String, tn : String, p : int, q : int, o : int, ci : int):
+		func _init(t,n : String,tn : String,p : int,q : int,o : int,ci : int):
 			tag = t
 			name = n
 			type_name = tn
@@ -1106,7 +1106,7 @@ class Analysis:
 	}
 	
 	class ASTFieldGroup:
-		func _init(n : String, pi : int, r : int):
+		func _init(n : String,pi : int,r : int):
 			name = n
 			parent_class_id = pi
 			rule = r
@@ -1126,7 +1126,7 @@ class Analysis:
 			return res
 	
 	class ASTImport:
-		func _init(a_path : String, a_public : bool, sha : String):
+		func _init(a_path : String,a_public : bool,sha : String):
 			path = a_path
 			public = a_public
 			sha256 = sha
@@ -1142,7 +1142,7 @@ class Analysis:
 	var proto_version : int = 0
 	
 	class DescriptionResult:
-		func _init(s : bool = true, e = null, d : String = ""):
+		func _init(s : bool = true,e = null,d : String = ""):
 			success = s
 			error = e
 			description = d
@@ -1458,7 +1458,7 @@ class Semantic:
 	}
 	
 	class CheckResult:
-		func _init(mci : int, aci : int, ti : int, s : int):
+		func _init(mci : int,aci : int,ti : int,s : int):
 			main_construction_index = mci
 			associated_construction_index = aci
 			table_index = ti
@@ -1720,7 +1720,7 @@ class Translator:
 		elif field.field_type == Analysis.FIELD_TYPE.STRING:
 			return "String"
 		elif field.field_type == Analysis.FIELD_TYPE.BYTES:
-			return "PoolByteArray"
+			return "PackedByteArray"
 		return ""
 	
 	func generate_field_constructor(field_index : int, nesting : int) -> String:
@@ -1930,7 +1930,7 @@ class Translator:
 			var cls_pref : String = ""
 			cls_pref += tabulate("class " + class_table[class_index].name + ":\n", nesting)
 			nesting += 1
-			cls_pref += tabulate("func _init():\n", nesting)
+			cls_pref += tabulate("func _init():
 			text += cls_pref
 			nesting += 1
 			text += tabulate("var service\n", nesting)
@@ -1975,12 +1975,12 @@ class Translator:
 		text += tabulate("return PBPacker.message_to_string(data)\n", nesting)
 		text += tabulate("\n", nesting)
 		nesting -= 1
-		text += tabulate("func to_bytes() -> PoolByteArray:\n", nesting)
+		text += tabulate("func to_bytes() -> PackedByteArray:\n", nesting)
 		nesting += 1
 		text += tabulate("return PBPacker.pack_message(data)\n", nesting)
 		text += tabulate("\n", nesting)
 		nesting -= 1
-		text += tabulate("func from_bytes(bytes : PoolByteArray, offset : int = 0, limit : int = -1) -> int:\n", nesting)
+		text += tabulate("func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:\n", nesting)
 		nesting += 1
 		text += tabulate("var cur_limit = bytes.size()\n", nesting)
 		text += tabulate("if limit != -1:\n", nesting)
@@ -2048,7 +2048,7 @@ class Translator:
 	
 
 class ImportFile:
-	func _init(sha : String, a_path : String, a_parent : int):
+	func _init(sha : String,a_path : String,a_parent : int):
 		sha256 = sha
 		path = a_path
 		parent_index = a_parent
@@ -2152,7 +2152,7 @@ func translate_all(analyzes : Dictionary, file_name : String, core_file_name : S
 	var semantic : Semantic = Semantic.new(analyze)
 	if !semantic.check():
 		return false
-	print("Perform translation.")
+	print("Perform position.")
 	var translator : Translator = Translator.new(analyze)
 	if !translator.translate(file_name, core_file_name):
 		return false

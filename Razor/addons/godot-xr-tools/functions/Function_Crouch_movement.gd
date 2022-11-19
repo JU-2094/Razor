@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_CrouchMovement
 extends MovementProvider
 
@@ -6,7 +6,7 @@ extends MovementProvider
 ## Movement Provider for Crouching
 ##
 ## @desc:
-##     This script works with the PlayerBody attached to the players ARVROrigin.
+##     This script works with the PlayerBody attached to the players XROrigin3D.
 ##
 ##     When the player presses the selected button, the height is overridden
 ##     to the crouch height
@@ -34,13 +34,13 @@ enum Buttons {
 
 
 ## Movement provider order
-export var order := 10
+@export var order := 10
 
 ## Crouch height
-export var crouch_height := 1.0
+@export var crouch_height := 1.0
 
 ## Crouch button
-export (Buttons) var crouch_button: int = Buttons.VR_PAD
+@export (Buttons) var crouch_button: int = Buttons.VR_PAD
 
 
 ## Crouching flag
@@ -48,7 +48,7 @@ var _crouching := false
 
 
 # Controller node
-onready var _controller : ARVRController = get_parent()
+@onready var _controller : XRController3D = get_parent()
 
 
 # Perform jump movement
@@ -71,11 +71,11 @@ func physics_movement(delta: float, player_body: PlayerBody, _disabled: bool):
 
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
+	if !test_controller or !test_controller is XRController3D:
 		return "Unable to find ARVR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

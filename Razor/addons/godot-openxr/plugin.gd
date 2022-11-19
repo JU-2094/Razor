@@ -1,10 +1,10 @@
-tool
+@tool
 extends EditorPlugin
 
 var openxr_run_select = null
 
 func _enter_tree():
-	openxr_run_select = preload("res://addons/godot-openxr/editor/OpenXRRunSelect.tscn").instance()
+	openxr_run_select = preload("res://addons/godot-openxr/editor/OpenXRRunSelect.tscn").instantiate()
 	add_control_to_container(CONTAINER_TOOLBAR, openxr_run_select)
 
 func _exit_tree():

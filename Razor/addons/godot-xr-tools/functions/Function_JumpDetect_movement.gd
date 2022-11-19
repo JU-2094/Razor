@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_JumpDetect
 extends MovementProvider
 
@@ -7,7 +7,7 @@ extends MovementProvider
 ## Movement Provider for Player Jump Detection
 ##
 ## @desc:
-##     This script can detect jumping based on either the players body jumping,
+##     This script can detect jumping based checked either the players body jumping,
 ##     or by the player swinging their arms up.
 ##
 ##     The player body jumping is detected by putting the cameras instantaneous
@@ -23,22 +23,22 @@ extends MovementProvider
 
 
 ## Movement provider order
-export var order := 20
+@export var order := 20
 
 ## Enable detecting of jump via body (through the camera)
-export var body_jump_enable := true
+@export var body_jump_enable := true
 
 ## Only jump as high as the player (no ground physics)
-export var body_jump_player_only := false
+@export var body_jump_player_only := false
 
 ## Body jump detection threshold (M/S^2)
-export var body_jump_threshold := 2.5
+@export var body_jump_threshold := 2.5
 
 ## Enable detectionm of jump via arms (through the controllers)
-export var arms_jump_enable := false
+@export var arms_jump_enable := false
 
 ## Arms jump detection threshold (M/S^2)
-export var arms_jump_threshold := 5.0
+@export var arms_jump_threshold := 5.0
 
 
 # Sliding Average class
@@ -56,14 +56,14 @@ class SlidingAverage:
 	var _data := Array()
 
 	# Constructor
-	func _init(var size: int):
+	func _init(size: int):
 		# Set the size and fill the array
 		_size = size
 		for i in size:
 			_data.push_back(0.0)
 
 	# Update the average
-	func update(var entry: float) -> float:
+	func update(entry: float) -> float:
 		# Add the new entry and subtract the old
 		_sum += entry
 		_sum -= _data[_pos]
@@ -87,10 +87,10 @@ var _controller_left_velocity := SlidingAverage.new(5)
 var _controller_right_velocity := SlidingAverage.new(5)
 
 # Node references
-onready var _origin_node := ARVRHelpers.get_arvr_origin(self)
-onready var _camera_node := ARVRHelpers.get_arvr_camera(self)
-onready var _controller_left_node := ARVRHelpers.get_left_controller(self)
-onready var _controller_right_node := ARVRHelpers.get_right_controller(self)
+@onready var _origin_node := ARVRHelpers.get_arvr_origin(self)
+@onready var _camera_node := ARVRHelpers.get_arvr_camera(self)
+@onready var _controller_left_node := ARVRHelpers.get_left_controller(self)
+@onready var _controller_right_node := ARVRHelpers.get_right_controller(self)
 
 
 # Perform jump detection
@@ -116,7 +116,7 @@ func _detect_body_jump(delta: float, player_body: PlayerBody) -> void:
 		return;
 
 	# Correct for ARVR world-scale (convert to player units)
-	camera_vel /= ARVRServer.world_scale
+	camera_vel /= XRServer.world_scale
 
 	# Clamp the camera instantaneous velocity to +/- 2x the jump threshold
 	camera_vel = clamp(camera_vel, -2.0 * body_jump_threshold, 2.0 * body_jump_threshold)
@@ -148,8 +148,8 @@ func _detect_arms_jump(delta: float, player_body: PlayerBody) -> void:
 		return
 
 	# Correct for ARVR world-scale (convert to player units)
-	controller_left_vel /= ARVRServer.world_scale
-	controller_right_vel /= ARVRServer.world_scale
+	controller_left_vel /= XRServer.world_scale
+	controller_right_vel /= XRServer.world_scale
 	
 	# Clamp the controller instantaneous velocity to +/- 2x the jump threshold
 	controller_left_vel = clamp(controller_left_vel, -2.0 * arms_jump_threshold, 2.0 * arms_jump_threshold)

@@ -2,5 +2,5 @@
 
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Pickup.gd" type="Script" id=1]
 
-[node name="Function_Pickup" type="Spatial"]
+[node name="Function_Pickup" type="Node3D"]
 script = ExtResource( 1 )

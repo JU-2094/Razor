@@ -1,14 +1,12 @@
-extends Position3D
+extends Marker3D
 
-export var distance: float = 1.0
-export var height_from_floor: float = 1.0
-export var theta: float = 180
-export(NodePath) var target_path
-var init_origin: Vector3 = Vector3.ZERO
+@export var distance: float = 1.0
+@export var height_from_floor: float = 1.0
+@export var theta: float = 180
+@export var target_path: NodePath
 
 func _ready():
-	init_origin = global_translation
-	translation.y = height_from_floor
+	position.y = height_from_floor
 
 func _process(delta):
 	# Position of the object to follow with local coordinates
@@ -16,12 +14,12 @@ func _process(delta):
 	var target: Vector3 = get_node(target_path).get_node("Body").global_translation
 
 	look_at(Vector3(target.x, 0, target.z), Vector3.UP)
-	translation.x = target.x + distance*sin(deg2rad(theta))
-	translation.z = target.z + distance*cos(deg2rad(theta))
+	position.x = target.x + distance*sin(deg_to_rad(theta))
+	position.z = target.z + distance*cos(deg_to_rad(theta))
 	
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
-		if event.button_mask == BUTTON_MASK_LEFT:
+		if event.button_mask == MOUSE_BUTTON_MASK_LEFT:
 			if event.relative.x > 0:
 				theta = theta + 2
 			elif event.relative.x < 0:

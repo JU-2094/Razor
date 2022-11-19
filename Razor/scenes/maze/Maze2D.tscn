@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/godot/Maze2D.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/tilemap_packed.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/tilemap_packed.png" type="Texture2D" id=2]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap_packed.png 0"
@@ -189,4 +189,4 @@ script = ExtResource( 1 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 34, 0, 0 )
+tile_data = PackedInt32Array( 34, 0, 0 )

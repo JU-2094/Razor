@@ -11,11 +11,11 @@ animation = "Grip Pose"
 
 [sub_resource type="AnimationNodeBlend2" id=5]
 filter_enabled = true
-filters = [ "Armature_Left/Skeleton:middle_distal", "Armature_Left/Skeleton:middle_middle", "Armature_Left/Skeleton:middle_proximal", "Armature_Left/Skeleton:pinky_distal", "Armature_Left/Skeleton:pinky_middle", "Armature_Left/Skeleton:pinky_proximal", "Armature_Left/Skeleton:ring_distal", "Armature_Left/Skeleton:ring_middle", "Armature_Left/Skeleton:ring_proximal" ]
+filters = [ "Armature_Left/Skeleton3D:middle_distal", "Armature_Left/Skeleton3D:middle_middle", "Armature_Left/Skeleton3D:middle_proximal", "Armature_Left/Skeleton3D:pinky_distal", "Armature_Left/Skeleton3D:pinky_middle", "Armature_Left/Skeleton3D:pinky_proximal", "Armature_Left/Skeleton3D:ring_distal", "Armature_Left/Skeleton3D:ring_middle", "Armature_Left/Skeleton3D:ring_proximal" ]
 
 [sub_resource type="AnimationNodeBlend2" id=2]
 filter_enabled = true
-filters = [ "Armature_Left/Skeleton:index_distal", "Armature_Left/Skeleton:index_middle", "Armature_Left/Skeleton:index_proximal" ]
+filters = [ "Armature_Left/Skeleton3D:index_distal", "Armature_Left/Skeleton3D:index_middle", "Armature_Left/Skeleton3D:index_proximal" ]
 
 [resource]
 graph_offset = Vector2( 232.37, 34.5087 )

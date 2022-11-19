@@ -1,5 +1,5 @@
-tool
-extends Spatial
+@tool
+extends Node3D
 
 # enum our buttons, should find a way to put this more central
 enum Buttons {
@@ -21,16 +21,44 @@ enum Buttons {
 	VR_ACTION = 255
 }
 
-export var enabled = true setget set_enabled
-export var show_laser = true setget set_show_laser
-export var show_target = false
-export (Buttons) var active_button = Buttons.VR_TRIGGER
-export var action = ""
-export var y_offset = -0.05 setget set_y_offset
-export var distance = 10 setget set_distance
-export (int, LAYERS_3D_PHYSICS) var collision_mask = 15 setget set_collision_mask
-export var collide_with_bodies = true setget set_collide_with_bodies
-export var collide_with_areas = false setget set_collide_with_areas
+@export var enabled = true :
+	get:
+		return enabled # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_enabled
+@export var show_laser = true :
+	get:
+		return show_laser # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_show_laser
+@export var show_target = false
+@export (Buttons) var active_button = Buttons.VR_TRIGGER
+@export var action = ""
+@export var y_offset = -0.05 :
+	get:
+		return y_offset # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_y_offset
+@export var distance = 10 :
+	get:
+		return distance # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_distance
+@export (int, LAYERS_3D_PHYSICS) var collision_mask = 15 :
+	get:
+		return collision_mask # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_collision_mask
+@export var collide_with_bodies = true :
+	get:
+		return collide_with_bodies # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_collide_with_bodies
+@export var collide_with_areas = false :
+	get:
+		return collide_with_areas # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_collide_with_areas
 
 var target = null
 var last_target = null
@@ -44,7 +72,7 @@ func set_enabled(p_enabled):
 	# this gets called before our scene is ready, we'll call this again in _ready to enable this
 	if is_inside_tree():
 		$Laser.visible = p_enabled and show_laser
-		$RayCast.enabled = p_enabled
+		$RayCast3D.enabled = p_enabled
 
 func set_show_laser(p_show):
 	show_laser = p_show
@@ -54,35 +82,35 @@ func set_show_laser(p_show):
 func set_y_offset(p_offset):
 	y_offset = p_offset
 	if is_inside_tree():
-		$Laser.translation.y = y_offset * ws
-		$RayCast.translation.y = y_offset * ws
+		$Laser.position.y = y_offset * ws
+		$RayCast3D.position.y = y_offset * ws
 
 func set_collision_mask(p_new_mask):
 	collision_mask = p_new_mask
 	if is_inside_tree():
-		$RayCast.collision_mask = collision_mask
+		$RayCast3D.collision_mask = collision_mask
 
 func set_distance(p_new_value):
 	distance = p_new_value
 	if is_inside_tree():
 		$Laser.mesh.size.z = distance
-		$Laser.translation.z = distance * -0.5
-		$RayCast.cast_to.z = -distance
+		$Laser.position.z = distance * -0.5
+		$RayCast3D.cast_to.z = -distance
 
 func set_collide_with_bodies(p_new_value : bool):
 	collide_with_bodies = p_new_value
 	if is_inside_tree():
-		$RayCast.collide_with_bodies = collide_with_bodies
+		$RayCast3D.collide_with_bodies = collide_with_bodies
 
 func set_collide_with_areas(p_new_value : bool):
 	collide_with_areas = p_new_value
 	if is_inside_tree():
-		$RayCast.collide_with_areas = collide_with_areas
+		$RayCast3D.collide_with_areas = collide_with_areas
 
 func _button_pressed():
-	if $RayCast.is_colliding():
-		target = $RayCast.get_collider()
-		last_collided_at = $RayCast.get_collision_point()
+	if $RayCast3D.is_colliding():
+		target = $RayCast3D.get_collider()
+		last_collided_at = $RayCast3D.get_collision_point()
 		
 		if target.has_signal("pointer_pressed"):
 			target.emit_signal("pointer_pressed", last_collided_at)
@@ -109,12 +137,12 @@ func _on_button_release(p_button):
 		_button_released()
 
 func _ready():
-	ws = ARVRServer.world_scale
+	ws = XRServer.world_scale
 	
 	if active_button != Buttons.VR_ACTION:
-		# Get button press feedback from our parent (should be an ARVRController)
-		get_parent().connect("button_pressed", self, "_on_button_pressed")
-		get_parent().connect("button_release", self, "_on_button_release")
+		# Get button press feedback from our parent (should be an XRController3D)
+		get_parent().connect("button_pressed",Callable(self,"_on_button_pressed"))
+		get_parent().connect("button_released",Callable(self,"_on_button_release"))
 	
 	# init our state
 	set_y_offset(y_offset)
@@ -135,23 +163,23 @@ func _process(delta):
 		elif !Input.is_action_pressed(action) and target:
 			_button_released()
 	
-	var new_ws = ARVRServer.world_scale
+	var new_ws = XRServer.world_scale
 	if (ws != new_ws):
 		ws = new_ws
 		set_y_offset(y_offset)
 	
-	if enabled and $RayCast.is_colliding():
-		var new_at = $RayCast.get_collision_point()
+	if enabled and $RayCast3D.is_colliding():
+		var new_at = $RayCast3D.get_collision_point()
 		
 		if is_instance_valid(target):
-			# if target is set our mouse must be down, we keep "focus" on our target
+			# if target is set our mouse must be down, we keep "focus" checked our target
 			if new_at != last_collided_at:
 				if target.has_signal("pointer_moved"):
 					target.emit_signal("pointer_moved", last_collided_at, new_at)
 				elif target.has_method("pointer_moved"):
 					target.pointer_moved(last_collided_at, new_at)
 		else:
-			var new_target = $RayCast.get_collider()
+			var new_target = $RayCast3D.get_collider()
 
 			# are we pointing to a new target?
 			if new_target != last_target:

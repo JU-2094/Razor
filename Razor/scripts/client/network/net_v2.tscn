@@ -2,5 +2,5 @@
 
 [ext_resource path="res://scripts/client/network/net_v2.gd" type="Script" id=1]
 
-[node name="Spatial" type="Node"]
+[node name="Node3D" type="Node"]
 script = ExtResource( 1 )

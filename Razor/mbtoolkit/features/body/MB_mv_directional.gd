@@ -1,10 +1,10 @@
 extends Node2D
-export var speed: float = 30
-export var fall_acceleration: float = 75
+@export var speed: float = 30
+@export var fall_acceleration: float = 75
 
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
-var body: KinematicBody
+var body: CharacterBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,7 +29,7 @@ func ft_process(delta):
 		direction = direction.normalized()
 		lastDirection = direction
 		var dot_product = Vector2(direction.x, direction.z).dot(Vector2(0,1))
-		var degrees = rad2deg(acos(dot_product))
+		var degrees = rad_to_deg(acos(dot_product))
 		var angle = degrees if direction.x >= 0 else degrees * -1
 		# dot product 1 - 0 degrees, -1 - 180 degrees
 		# x is the orientation
@@ -39,4 +39,7 @@ func ft_process(delta):
 	velocity.z = direction.z * speed
 	velocity.y -= fall_acceleration * delta
 	# Apply movement to player object
-	velocity = body.move_and_slide(velocity, Vector3.UP)
+	body.set_velocity(velocity)
+	body.set_up_direction(Vector3.UP)
+	body.move_and_slide()
+	velocity = body.velocity

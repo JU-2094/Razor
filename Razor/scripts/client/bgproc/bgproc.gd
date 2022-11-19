@@ -12,7 +12,7 @@ func bg_init(ctx):
 	register.clear()
 	tthread.clear()
 	mthread = Thread.new()
-	mthread.start(self, "_mainth")
+	mthread.start(Callable(self,"_mainth"))
 	gctx = ctx
 
 func bg_chk(ctx):
@@ -44,7 +44,7 @@ func del_cts(reg):
 func call_int(ctx, pfun, args):	 
 	var cbkth = Thread.new()
 	var rfun = funcref(ctx, pfun)
-	cbkth.start(self, '_crtth', [null, rfun, args])
+	cbkth.start(Callable(self,'_crtth').bind([null, rfun, args]))
 
 func _crtth(args):
 	args[1].call_func(args[2])

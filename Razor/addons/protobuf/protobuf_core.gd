@@ -131,7 +131,7 @@ enum PB_SERVICE_STATE {
 }
 
 class PBField:
-	func _init(a_name : String, a_type : int, a_rule : int, a_tag : int, packed : bool, a_value = null):
+	func _init(a_name : String,a_type : int,a_rule : int,a_tag : int,packed : bool,a_value = null):
 		name = a_name
 		type = a_type
 		rule = a_rule
@@ -170,8 +170,8 @@ class PBPacker:
 		else:
 			return (n >> 1)
 
-	static func pack_varint(value) -> PoolByteArray:
-		var varint : PoolByteArray = PoolByteArray()
+	static func pack_varint(value) -> PackedByteArray:
+		var varint : PackedByteArray = PackedByteArray()
 		if typeof(value) == TYPE_BOOL:
 			if value:
 				value = 1
@@ -189,8 +189,8 @@ class PBPacker:
 			varint.append(0x01)
 		return varint
 
-	static func pack_bytes(value, count : int, data_type : int) -> PoolByteArray:
-		var bytes : PoolByteArray = PoolByteArray()
+	static func pack_bytes(value, count : int, data_type : int) -> PackedByteArray:
+		var bytes : PackedByteArray = PackedByteArray()
 		if data_type == PB_DATA_TYPE.FLOAT:
 			var spb : StreamPeerBuffer = StreamPeerBuffer.new()
 			spb.put_float(value)
@@ -205,7 +205,7 @@ class PBPacker:
 				value >>= 8
 		return bytes
 
-	static func unpack_bytes(bytes : PoolByteArray, index : int, count : int, data_type : int):
+	static func unpack_bytes(bytes : PackedByteArray, index : int, count : int, data_type : int):
 		var value = 0
 		if data_type == PB_DATA_TYPE.FLOAT:
 			var spb : StreamPeerBuffer = StreamPeerBuffer.new()
@@ -234,19 +234,19 @@ class PBPacker:
 				value <<= 7
 		return value
 
-	static func pack_type_tag(type : int, tag : int) -> PoolByteArray:
+	static func pack_type_tag(type : int, tag : int) -> PackedByteArray:
 		return pack_varint((tag << 3) | type)
 
-	static func isolate_varint(bytes : PoolByteArray, index : int) -> PoolByteArray:
-		var result : PoolByteArray = PoolByteArray()
+	static func isolate_varint(bytes : PackedByteArray, index : int) -> PackedByteArray:
+		var result : PackedByteArray = PackedByteArray()
 		for i in range(index, bytes.size()):
 			result.append(bytes[i])
 			if !(bytes[i] & 0x80):
 				break
 		return result
 
-	static func unpack_type_tag(bytes : PoolByteArray, index : int) -> PBTypeTag:
-		var varint_bytes : PoolByteArray = isolate_varint(bytes, index)
+	static func unpack_type_tag(bytes : PackedByteArray, index : int) -> PBTypeTag:
+		var varint_bytes : PackedByteArray = isolate_varint(bytes, index)
 		var result : PBTypeTag = PBTypeTag.new()
 		if varint_bytes.size() != 0:
 			result.ok = true
@@ -256,8 +256,8 @@ class PBPacker:
 			result.tag = unpacked >> 3
 		return result
 
-	static func pack_length_delimeted(type : int, tag : int, bytes : PoolByteArray) -> PoolByteArray:
-		var result : PoolByteArray = pack_type_tag(type, tag)
+	static func pack_length_delimeted(type : int, tag : int, bytes : PackedByteArray) -> PackedByteArray:
+		var result : PackedByteArray = pack_type_tag(type, tag)
 		result.append_array(pack_varint(bytes.size()))
 		result.append_array(bytes)
 		return result
@@ -274,13 +274,13 @@ class PBPacker:
 		else:
 			return PB_TYPE.UNDEFINED
 
-	static func pack_field(field : PBField) -> PoolByteArray:
+	static func pack_field(field : PBField) -> PackedByteArray:
 		var type : int = pb_type_from_data_type(field.type)
 		var type_copy : int = type
 		if field.rule == PB_RULE.REPEATED && field.option_packed:
 			type = PB_TYPE.LENGTHDEL
-		var head : PoolByteArray = pack_type_tag(type, field.tag)
-		var data : PoolByteArray = PoolByteArray()
+		var head : PackedByteArray = pack_type_tag(type, field.tag)
+		var data : PackedByteArray = PackedByteArray()
 		if type == PB_TYPE.VARINT:
 			var value
 			if field.rule == PB_RULE.REPEATED:
@@ -336,7 +336,7 @@ class PBPacker:
 					return pack_length_delimeted(type, field.tag, data)
 				elif field.type == PB_DATA_TYPE.STRING:
 					for v in field.value:
-						var obj = v.to_utf8()
+						var obj = v.to_utf8_buffer()
 						data.append_array(pack_length_delimeted(type, field.tag, obj))
 					return data
 				elif field.type == PB_DATA_TYPE.BYTES:
@@ -345,17 +345,17 @@ class PBPacker:
 					return data
 				elif typeof(field.value[0]) == TYPE_OBJECT:
 					for v in field.value:
-						var obj : PoolByteArray = v.to_bytes()
+						var obj : PackedByteArray = v.to_bytes()
 						#if obj != null && obj.size() > 0:
 						#	data.append_array(pack_length_delimeted(type, field.tag, obj))
 						#else:
-						#	data = PoolByteArray()
+						#	data = PackedByteArray()
 						#	return data
 						data.append_array(pack_length_delimeted(type, field.tag, obj))
 					return data
 			else:
 				if field.type == PB_DATA_TYPE.STRING:
-					var str_bytes : PoolByteArray = field.value.to_utf8()
+					var str_bytes : PackedByteArray = field.value.to_utf8_buffer()
 					if PROTO_VERSION == 2 || (PROTO_VERSION == 3 && str_bytes.size() > 0):
 						data.append_array(str_bytes)
 						return pack_length_delimeted(type, field.tag, data)
@@ -364,7 +364,7 @@ class PBPacker:
 						data.append_array(field.value)
 						return pack_length_delimeted(type, field.tag, data)
 				elif typeof(field.value) == TYPE_OBJECT:
-					var obj : PoolByteArray = field.value.to_bytes()
+					var obj : PackedByteArray = field.value.to_bytes()
 					#if obj != null && obj.size() > 0:
 					#	data.append_array(obj)
 					#	return pack_length_delimeted(type, field.tag, data)
@@ -379,7 +379,7 @@ class PBPacker:
 		else:
 			return data
 
-	static func unpack_field(bytes : PoolByteArray, offset : int, field : PBField, type : int, message_func_ref) -> int:
+	static func unpack_field(bytes : PackedByteArray, offset : int, field : PBField, type : int, message_func_ref) -> int:
 		if field.rule == PB_RULE.REPEATED && type != PB_TYPE.LENGTHDEL && field.option_packed:
 			var count = isolate_varint(bytes, offset)
 			if count.size() > 0:
@@ -479,7 +479,7 @@ class PBPacker:
 							else:
 								return offset
 						elif field.type == PB_DATA_TYPE.STRING:
-							var str_bytes : PoolByteArray = PoolByteArray()
+							var str_bytes : PackedByteArray = PackedByteArray()
 							for i in range(offset, inner_size + offset):
 								str_bytes.append(bytes[i])
 							if field.rule == PB_RULE.REPEATED:
@@ -488,7 +488,7 @@ class PBPacker:
 								field.value = str_bytes.get_string_from_utf8()
 							return offset + inner_size
 						elif field.type == PB_DATA_TYPE.BYTES:
-							var val_bytes : PoolByteArray = PoolByteArray()
+							var val_bytes : PackedByteArray = PackedByteArray()
 							for i in range(offset, inner_size + offset):
 								val_bytes.append(bytes[i])
 							if field.rule == PB_RULE.REPEATED:
@@ -502,7 +502,7 @@ class PBPacker:
 					return PB_ERR.LENGTHDEL_SIZE_NOT_FOUND
 		return PB_ERR.UNDEFINED_STATE
 
-	static func unpack_message(data, bytes : PoolByteArray, offset : int, limit : int) -> int:
+	static func unpack_message(data, bytes : PackedByteArray, offset : int, limit : int) -> int:
 		while true:
 			var tt : PBTypeTag = unpack_type_tag(bytes, offset)
 			if tt.ok:
@@ -527,13 +527,13 @@ class PBPacker:
 				return offset
 		return PB_ERR.UNDEFINED_STATE
 
-	static func pack_message(data) -> PoolByteArray:
+	static func pack_message(data) -> PackedByteArray:
 		var DEFAULT_VALUES
 		if PROTO_VERSION == 2:
 			DEFAULT_VALUES = DEFAULT_VALUES_2
 		elif PROTO_VERSION == 3:
 			DEFAULT_VALUES = DEFAULT_VALUES_3
-		var result : PoolByteArray = PoolByteArray()
+		var result : PackedByteArray = PackedByteArray()
 		var keys : Array = data.keys()
 		keys.sort()
 		for i in keys:
@@ -545,7 +545,7 @@ class PBPacker:
 				result.append_array(pack_field(data[i].field))
 			elif data[i].field.rule == PB_RULE.REQUIRED:
 				print("Error: required field is not filled: Tag:", data[i].field.tag)
-				return PoolByteArray()
+				return PackedByteArray()
 		return result
 
 	static func check_required(data) -> bool:

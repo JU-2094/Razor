@@ -4,7 +4,7 @@
 [ext_resource path="res://mbtoolkit/features/body/MB_cam_circle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/maze/Maze3D.tscn" type="PackedScene" id=3]
 
-[node name="Spatial" type="Spatial"]
+[node name="Node3D" type="Node3D"]
 
 [node name="Maze3D" parent="." instance=ExtResource( 3 )]
 

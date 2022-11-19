@@ -1,11 +1,15 @@
-tool
-extends KinematicBody
-# should really change this to Spatial once #17401 is resolved
+@tool
+extends CharacterBody3D
+# should really change this to Node3D once #17401 is resolved
 
-# Add this scene as a sub scene of your ARVRController node to implement a teleport function on that controller.
+# Add this scene as a sub scene of your XRController3D node to implement a teleport function checked that controller.
 
 # Is this active?
-export var enabled = true setget set_enabled, get_enabled
+@export var enabled = true :
+	get:
+		return enabled # TODOConverter40 Copy here content of get_enabled
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_enabled
 
 # enum our buttons, should find a way to put this more central
 enum Buttons {
@@ -26,23 +30,31 @@ enum Buttons {
 	VR_TRIGGER = 15
 }
 
-export (Buttons) var teleport_button = Buttons.VR_TRIGGER
-export (Color) var can_teleport_color = Color(0.0, 1.0, 0.0, 1.0)
-export (Color) var cant_teleport_color = Color(1.0, 0.0, 0.0, 1.0)
-export (Color) var no_collision_color = Color(45.0 / 255.0, 80.0 / 255.0, 220.0 / 255.0, 1.0)
-export var player_height = 1.8 setget set_player_height, get_player_height
-export var player_radius = 0.4 setget set_player_radius, get_player_radius
-export var strength = 5.0
-export var max_slope = 20.0
-export (int, LAYERS_3D_PHYSICS) var valid_teleport_mask = ~0
+@export (Buttons) var teleport_button = Buttons.VR_TRIGGER
+@export (Color) var can_teleport_color = Color(0.0, 1.0, 0.0, 1.0)
+@export (Color) var cant_teleport_color = Color(1.0, 0.0, 0.0, 1.0)
+@export (Color) var no_collision_color = Color(45.0 / 255.0, 80.0 / 255.0, 220.0 / 255.0, 1.0)
+@export var player_height = 1.8 :
+	get:
+		return player_height # TODOConverter40 Copy here content of get_player_height
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_player_height
+@export var player_radius = 0.4 :
+	get:
+		return player_radius # TODOConverter40 Copy here content of get_player_radius
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_player_radius
+@export var strength = 5.0
+@export var max_slope = 20.0
+@export (int, LAYERS_3D_PHYSICS) var valid_teleport_mask = ~0
 
 # once this is no longer a kinematic body, we'll need this..
 # export (int, LAYERS_3D_PHYSICS) var collision_mask = 1
 
 # We don't know the name of the camera node...
-export (NodePath) var camera = null
+@export (NodePath) var camera = null
 
-onready var ws = ARVRServer.world_scale
+@onready var ws = XRServer.world_scale
 var origin_node = null
 var camera_node = null
 var is_on_floor = true
@@ -50,23 +62,23 @@ var is_teleporting = false
 var can_teleport = true
 var teleport_rotation = 0.0;
 var floor_normal = Vector3(0.0, 1.0, 0.0)
-var last_target_transform = Transform()
+var last_target_transform = Transform3D()
 var collision_shape = null
 var step_size = 0.5
 
 # By default we show a capsule to indicate where the player lands.
-# Turn on editable children,
+# Turn checked editable children,
 # hide the capsule,
 # and add your own player character as child.
-onready var capsule = get_node("Target/Player_figure/Capsule")
+@onready var capsule = get_node("Target/Player_figure/Capsule")
 
 func set_enabled(new_value):
 	enabled = new_value
 	if enabled:
-		# make sure our physics process is on
+		# make sure our physics process is checked
 		set_physics_process(true)
 	else:
-		# we turn this off in physics process just in case we want to do some cleanup
+		# we turn this unchecked in physics process just in case we want to do some cleanup
 		pass
 
 func get_enabled():
@@ -82,8 +94,8 @@ func set_player_height(p_height):
 		collision_shape.height = player_height - (2.0 * player_radius)
 
 	if capsule:
-		capsule.mesh.mid_height = player_height - (2.0 * player_radius)
-		capsule.translation = Vector3(0.0, player_height/2.0, 0.0)
+		capsule.mesh.height = player_height - (2.0 * player_radius)
+		capsule.position = Vector3(0.0, player_height/2.0, 0.0)
 
 func get_player_radius():
 	return player_radius
@@ -96,10 +108,10 @@ func set_player_radius(p_radius):
 		collision_shape.radius = player_radius
 
 	if capsule:
-		capsule.mesh.mid_height = player_height - (2.0 * player_radius)
+		capsule.mesh.height = player_height - (2.0 * player_radius)
 		capsule.mesh.radius = player_radius
 
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	if camera == null:
 		return "You need to assign a camera"
 	
@@ -107,7 +119,7 @@ func _get_configuration_warning():
 
 func _ready():
 	if !Engine.editor_hint:
-		# We should be a child of an ARVRController and it should be a child or our ARVROrigin
+		# We should be a child of an XRController3D and it should be a child or our XROrigin3D
 		origin_node = get_node("../..")
 		
 		# It's inactive when we start
@@ -123,14 +135,14 @@ func _ready():
 			camera_node = get_node(camera)
 		else:
 			# see if we can find our default
-			camera_node = origin_node.get_node('ARVRCamera')
+			camera_node = origin_node.get_node('XRCamera3D')
 		
 		# get our capsule shape
-		collision_shape = $CollisionShape.shape
-		$CollisionShape.shape = null
+		collision_shape = $CollisionShape3D.shape
+		$CollisionShape3D.shape = null
 		
-		# now remove our collision shape, we are not using our kinematic body
-		remove_child($CollisionShape)
+		# now remove_at our collision shape, we are not using our kinematic body
+		remove_child($CollisionShape3D)
 	
 	# call set player to ensure our collision shape is sized
 	set_player_height(player_height)
@@ -138,7 +150,7 @@ func _ready():
 
 func _physics_process(delta):
 	if !Engine.editor_hint:
-		# We should be the child or the controller on which the teleport is implemented
+		# We should be the child or the controller checked which the teleport is implemented
 		var controller = get_parent()
 		
 		if !origin_node:
@@ -159,7 +171,7 @@ func _physics_process(delta):
 			return
 		
 		# check if our world scale has changed..
-		var new_ws = ARVRServer.world_scale
+		var new_ws = XRServer.world_scale
 		if ws != new_ws:
 			ws = new_ws
 			$Teleport.mesh.size = Vector2(0.05 * ws, 1.0)
@@ -174,17 +186,17 @@ func _physics_process(delta):
 				teleport_rotation = 0.0
 			
 			# get our physics engine state
-			var space = PhysicsServer.body_get_space(self.get_rid())
-			var state = PhysicsServer.space_get_direct_state(space)
-			var query = PhysicsShapeQueryParameters.new()
+			var space = PhysicsServer3D.body_get_space(self.get_rid())
+			var state = PhysicsServer3D.space_get_direct_state(space)
+			var query = PhysicsShapeQueryParameters3D.new()
 			
 			# init stuff about our query that doesn't change
 			query.collision_mask = collision_mask
 			query.margin = get_safe_margin()
 			query.shape_rid = collision_shape.get_rid()
 			
-			# make a transform for rotating and offseting our shape, it's always lying on its side by default...
-			var shape_transform = Transform(Basis(Vector3(1.0, 0.0, 0.0), deg2rad(90.0)), Vector3(0.0, player_height / 2.0, 0.0))
+			# make a transform for rotating and offseting our shape, it's always lying checked its side by default...
+			var shape_transform = Transform3D(Basis(Vector3(1.0, 0.0, 0.0), deg_to_rad(90.0)), Vector3(0.0, player_height / 2.0, 0.0))
 			
 			# update location
 			var teleport_global_transform = $Teleport.global_transform
@@ -194,12 +206,12 @@ func _physics_process(delta):
 			############################################################
 			# New teleport logic
 			# We're going to use test move in steps to find out where we hit something...
-			# This can be optimised loads by determining the lenght based on the angle between sections extending the length when we're in a flat part of the arch
+			# This can be optimised loads by determining the lenght based checked the angle between sections extending the length when we're in a flat part of the arch
 			# Where we do get a collission we may want to fine tune the collision
 			var cast_length = 0.0
 			var fine_tune = 1.0
 			var hit_something = false
-			var max_slope_cos = cos(deg2rad(max_slope))
+			var max_slope_cos = cos(deg_to_rad(max_slope))
 			for i in range(1,26):
 				var new_cast_length = cast_length + (step_size / fine_tune)
 				var global_target = Vector3(0.0, 0.0, -new_cast_length)
@@ -209,15 +221,15 @@ func _physics_process(delta):
 				var t2 = t * t
 				
 				# target to world space
-				global_target = teleport_global_transform.xform(global_target)
+				global_target = teleport_global_transform * global_target
 				
 				# adjust for gravity
 				global_target += down * t2
 				
 				# test our new location for collisions
-				query.transform = Transform(Basis(), global_target) * shape_transform
+				query.transform = Transform3D(Basis(), global_target) * shape_transform
 				var cast_result = state.collide_shape(query, 10)
-				if cast_result.empty():
+				if cast_result.is_empty():
 					# we didn't collide with anything so check our next section...
 					cast_length = new_cast_length
 					target_global_origin = global_target
@@ -233,12 +245,12 @@ func _physics_process(delta):
 						# if we're moving up, we hit the ceiling of something, we don't really care what
 						is_on_floor = false
 					else:
-						# now we cast a ray downwards to see if we're on a surface
+						# now we cast a ray downwards to see if we're checked a surface
 						var start_pos = target_global_origin + (Vector3.UP * 0.5 * player_height)
 						var end_pos = target_global_origin - (Vector3.UP * 1.1 * player_height)
 						
 						var intersects = state.intersect_ray(start_pos, end_pos, [], collision_mask)
-						if intersects.empty():
+						if intersects.is_empty():
 							is_on_floor = false
 						else:
 							# did we collide with a floor or a wall?
@@ -261,21 +273,21 @@ func _physics_process(delta):
 							if not valid_teleport_mask & collider_mask:
 								is_on_floor = false
 					
-					# we are colliding, find our if we're colliding on a wall or floor, one we can do, the other nope...
+					# we are colliding, find our if we're colliding checked a wall or floor, one we can do, the other nope...
 					cast_length += (collided_at - target_global_origin).length()
 					target_global_origin = collided_at
 					hit_something = true
 					break
 			
 			# and just update our shader
-			$Teleport.get_surface_material(0).set_shader_param("scale_t", 1.0 / strength)
-			$Teleport.get_surface_material(0).set_shader_param("ws", ws)
-			$Teleport.get_surface_material(0).set_shader_param("length", cast_length)
+			$Teleport.get_surface_override_material(0).set_shader_parameter("scale_t", 1.0 / strength)
+			$Teleport.get_surface_override_material(0).set_shader_parameter("ws", ws)
+			$Teleport.get_surface_override_material(0).set_shader_parameter("length", cast_length)
 			if hit_something:
 				var color = can_teleport_color
 				var normal = Vector3.UP
 				if is_on_floor:
-					# if we're on the floor we'll reorientate our target to match.
+					# if we're checked the floor we'll reorientate our target to match.
 					normal = floor_normal
 					can_teleport = true
 				else:
@@ -297,13 +309,13 @@ func _physics_process(delta):
 				last_target_transform.origin = target_global_origin + Vector3(0.0, 0.001, 0.0)
 				$Target.global_transform = last_target_transform
 				
-				$Teleport.get_surface_material(0).set_shader_param("mix_color", color)
-				$Target.get_surface_material(0).albedo_color = color
+				$Teleport.get_surface_override_material(0).set_shader_parameter("mix_color", color)
+				$Target.get_surface_override_material(0).albedo_color = color
 				$Target.visible = can_teleport
 			else:
 				can_teleport = false
 				$Target.visible = false
-				$Teleport.get_surface_material(0).set_shader_param("mix_color", no_collision_color)
+				$Teleport.get_surface_override_material(0).set_shader_parameter("mix_color", no_collision_color)
 		elif is_teleporting:
 			if can_teleport:
 				
@@ -315,9 +327,9 @@ func _physics_process(delta):
 				
 				# find out our user's feet's transformation
 				var cam_transform = camera_node.transform
-				var user_feet_transform = Transform()
+				var user_feet_transform = Transform3D()
 				user_feet_transform.origin = cam_transform.origin
-				user_feet_transform.origin.y = 0 # the feet are on the ground, but have the same X,Z as the camera
+				user_feet_transform.origin.y = 0 # the feet are checked the ground, but have the same X,Z as the camera
 				
 				# ensure this transform is upright
 				user_feet_transform.basis.y = Vector3(0.0, 1.0, 0.0)

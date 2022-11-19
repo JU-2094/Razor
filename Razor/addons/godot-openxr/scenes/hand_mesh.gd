@@ -1,16 +1,28 @@
-tool
-extends Spatial
+@tool
+extends Node3D
 
 enum MOTION_RANGE {
 	UNUBSTRUCTED = 0,
 	CONFORM_TO_CONTROLLER = 1
 }
 
-export (MOTION_RANGE) var motion_range setget set_motion_range
-export (Texture) var albedo_texture setget set_albedo_texture
-export (Texture) var normal_texture setget set_normal_texture
+@export (MOTION_RANGE) var motion_range :
+	get:
+		return motion_range # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_motion_range
+@export (Texture2D) var albedo_texture :
+	get:
+		return albedo_texture # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_albedo_texture
+@export (Texture2D) var normal_texture :
+	get:
+		return normal_texture # TODOConverter40 Non existent get function 
+	set(mod_value):
+		mod_value  # TODOConverter40 Copy here content of set_normal_texture
 
-var material : SpatialMaterial
+var material : StandardMaterial3D
 
 func set_motion_range(value):
 	motion_range = value
@@ -19,10 +31,10 @@ func set_motion_range(value):
 
 func _update_motion_range():
 	# for some reason not consistantly named between the two hands..
-	if $HandModel.find_node("Armature001"):
-		$HandModel/Armature001/Skeleton.motion_range = motion_range
+	if $HandModel.find_child("Armature001"):
+		$HandModel/Armature001/Skeleton3D.motion_range = motion_range
 	else:
-		$HandModel/Armature/Skeleton.motion_range = motion_range
+		$HandModel/Armature/Skeleton3D.motion_range = motion_range
 
 func set_albedo_texture(value):
 	albedo_texture = value
@@ -44,10 +56,10 @@ func _update_normal_texture():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if $HandModel.find_node("Armature001"):
-		material = $HandModel/Armature001/Skeleton/vr_glove_left_slim.mesh.surface_get_material(0)
+	if $HandModel.find_child("Armature001"):
+		material = $HandModel/Armature001/Skeleton3D/vr_glove_left_slim.mesh.surface_get_material(0)
 	else:
-		material = $HandModel/Armature/Skeleton/vr_glove_right_slim.mesh.surface_get_material(0)
+		material = $HandModel/Armature/Skeleton3D/vr_glove_right_slim.mesh.surface_get_material(0)
 
 	_update_motion_range()
 	_update_albedo_texture()

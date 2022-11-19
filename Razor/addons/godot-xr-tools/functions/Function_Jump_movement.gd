@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Function_Jump
 extends MovementProvider
 
@@ -8,10 +8,10 @@ extends MovementProvider
 ## @desc:
 ##     This script works with the Function_Jump_movement asset to provide 
 ##     jumping mechanics for the player. This script works with the PlayerBody
-##     attached to the players ARVROrigin.
+##     attached to the players XROrigin3D.
 ##
 ##     The player enables jumping by attaching a Function_Jump_movement as a 
-##     child of the appropriate ARVRController, then configuring the jump button 
+##     child of the appropriate XRController3D, then configuring the jump button 
 ##     and jump velocity.
 ##
 
@@ -35,13 +35,13 @@ enum Buttons {
 }
 
 ## Movement provider order
-export var order := 20
+@export var order := 20
 
 ## Button to trigger jump
-export (Buttons) var jump_button_id = Buttons.VR_TRIGGER
+@export (Buttons) var jump_button_id = Buttons.VR_TRIGGER
 
 # Node references
-onready var _controller: ARVRController = get_parent()
+@onready var _controller: XRController3D = get_parent()
 
 # Perform jump movement
 func physics_movement(delta: float, player_body: PlayerBody, _disabled: bool):
@@ -54,11 +54,11 @@ func physics_movement(delta: float, player_body: PlayerBody, _disabled: bool):
 		player_body.request_jump()
 
 # This method verifies the MovementProvider has a valid configuration.
-func _get_configuration_warning():
+func _get_configuration_warnings():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
+	if !test_controller or !test_controller is XRController3D:
 		return "Unable to find ARVR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warnings()

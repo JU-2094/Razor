@@ -4,11 +4,11 @@
 [ext_resource path="res://addons/godot-xr-tools/assets/Hand.gd" type="Script" id=2]
 [ext_resource path="res://addons/godot-xr-tools/assets/LeftHand.glb" type="PackedScene" id=3]
 
-[node name="RightHand" type="Spatial"]
+[node name="RightHand" type="Node3D"]
 script = ExtResource( 2 )
 
 [node name="RightHand" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = ExtResource( 1 )

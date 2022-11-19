@@ -1,15 +1,15 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape3D" id=1]
 
-[node name="Level" type="Spatial"]
+[node name="Level" type="Node3D"]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Box" type="RigidBody" parent="."]
+[node name="Box" type="RigidBody3D" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="Box"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Box"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]

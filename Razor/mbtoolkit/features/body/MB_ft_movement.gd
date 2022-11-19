@@ -1,6 +1,6 @@
 extends Node2D
-export var speed: float = 30
-export var fall_acceleration: float = 75
+@export var speed: float = 30
+@export var fall_acceleration: float = 75
 var lastDirection: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
 # Declare member variables here. Examples:
@@ -36,4 +36,7 @@ func ft_process(delta):
 	velocity.z = direction.z * speed
 	velocity.y -= fall_acceleration * delta
 	# Apply movement to player object
-	velocity = get_parent().move_and_slide(velocity, Vector3.UP)
+	.set_velocity(velocity)
+	.set_up_direction(Vector3.UP)
+	.move_and_slide()
+	velocity = get_parent().velocity

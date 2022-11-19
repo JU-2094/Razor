@@ -1,0 +1,7 @@
+res://mbtoolkit/features/body/MB_cam_circle.tscn
+res://mbtoolkit/features/body/MB_cam_circle.gd
+res://mbtoolkit/features/body/MB_can_shoot.tscn
+res://mbtoolkit/features/body/MB_can_shoot.gd
+res://scenes/Mage_01.tscn
+res://scenes/Bolt.tscn
+res://scenes/little_ball.tscn
