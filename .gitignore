@@ -2,7 +2,11 @@
 *.scn
 *.md5
 *.stex
+*.ctex
+*.cfg
+*.cache
 Razor/.import/
+Razor/.godot/
 .import/
 export.cfg
 export_preset.cfg
